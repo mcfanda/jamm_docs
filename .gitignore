@@ -5,6 +5,14 @@
 # Session Data files
 .RData
 
+# jamovi
+build/
+temp/
+#*.R
+gamlj.jmo
+problems/
+future/
+
 # Example code in package build process
 *-Ex.R
 
@@ -13,6 +21,7 @@
 
 # Output files from R CMD check
 /*.Rcheck/
+*.Rproj
 
 # RStudio files
 .Rproj.user/
@@ -31,6 +40,9 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user
 
-# Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
-rsconnect/
+# docs sources
+
+analytics.txt
+
