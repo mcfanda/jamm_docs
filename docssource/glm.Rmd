@@ -1,0 +1,39 @@
+---
+title: "GLM mediation models"
+topic: glm
+category: help
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+
+```{r echo=FALSE,results='hide'}
+source("../R/functions.R")
+
+```
+
+**jAMM** module for mediation models
+
+<img src="glm/main.png" class="img-responsive" alt="">
+
+The module estimates a simple, multiple, and conditional mediation model for based on OLS (and maximum likelihood) regression. It encompasses model with continuous and categorical independent variables. 
+
+
+# Examples
+
+Some worked out examples of the analyses carried out with jamovi jAMM are posted here (more to come)
+
+`r include_examples("glm")`
+
+If you are intested in checking the convergence of jAMM results with other software results, please visit:
+
+`r list_pages(category="rosetta")`
+
+
+`r issues()`
+

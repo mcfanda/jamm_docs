@@ -1,0 +1,24 @@
+---
+title: "Released Notes"
+output: 
+  html_document:
+    includes:
+         in_header: ganalytics.txt
+    toc: true
+    toc_float:
+         collapsed: false
+
+---
+
+
+```{r echo=FALSE,results='hide'}
+source("../R/functions.R")
+
+```
+
+#  version 0.0.3 (future in jamovi library)
+
+* First public release 
+
+
+`r issues()`

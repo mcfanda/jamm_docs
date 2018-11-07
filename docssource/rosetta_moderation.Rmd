@@ -1,0 +1,25 @@
+---
+title: "Rosetta store: moderated mediation"
+category: rosetta
+topic: moderation
+nickname: ros_exercise
+author: "(Marcello Gallucci)"
+output: 
+  html_document:
+    
+    includes:
+         in_header: ganalytics.txt
+    toc: true
+    toc_float:
+         collapsed: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r echo=FALSE,results='hide'}
+source("../R/functions.R")
+```
+
+
+
+`r issues()`

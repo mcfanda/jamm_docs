@@ -1,0 +1,23 @@
+name: "jamm-website"
+output_dir: "../docs"
+navbar:
+  title: "jAMM"
+  left:
+  - text: "Home"
+    href: index.html
+  - text: "GLM"
+    href:  glm.html
+  - text: "Rosetta store"
+    href:  rosetta.html
+  - text: "Release notes"
+    href:  release_notes.html
+
+  right: 
+  - text: "View on Github"
+    href: https://github.com/mcfanda/jamm
+output:
+  html_document:
+    css: style.css
+    theme: flatly
+
+    
