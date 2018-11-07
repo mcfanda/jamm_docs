@@ -410,7 +410,7 @@ medci(a, b, se.a, se.b,type = &quot;asymp&quot;)[1]</code></pre>
 medci(a, b, se.a, se.b,type = &quot;MC&quot;)[1]</code></pre>
 <pre><code>## $`97.5% CI`
 ##      2.5%     97.5% 
-## 0.2074275 0.5325997</code></pre>
+## 0.2081050 0.5320581</code></pre>
 <p>In R, simple bootstrap confidence intervals can be computed with <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">the mediation package</a></p>
 <p>Here are the results, again in line with the jAMM results.</p>
 <pre class="r"><code>library(mediation,quietly = T)
@@ -423,10 +423,10 @@ summary(med)</code></pre>
 ## Nonparametric Bootstrap Confidence Intervals with the BCa Method
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             0.3565       0.2250         0.54  &lt;2e-16 ***
-## ADE              0.0396      -0.2002         0.31    0.75    
-## Total Effect     0.3961       0.1639         0.65  &lt;2e-16 ***
-## Prop. Mediated   0.9000       0.5801         2.80  &lt;2e-16 ***
+## ACME             0.3565       0.2262         0.54  &lt;2e-16 ***
+## ADE              0.0396      -0.1958         0.30    0.78    
+## Total Effect     0.3961       0.1439         0.63  &lt;2e-16 ***
+## Prop. Mediated   0.9000       0.5678         2.52  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
