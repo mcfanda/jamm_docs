@@ -5,7 +5,7 @@ navbar:
   left:
   - text: "Home"
     href: index.html
-  - text: "GLM"
+  - text: "Docs"
     href:  glm.html
   - text: "Rosetta store"
     href:  rosetta.html

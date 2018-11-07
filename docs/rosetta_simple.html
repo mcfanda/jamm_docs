@@ -292,7 +292,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="glm.html">GLM</a>
+  <a href="glm.html">Docs</a>
 </li>
 <li>
   <a href="rosetta.html">Rosetta store</a>
@@ -410,7 +410,7 @@ medci(a, b, se.a, se.b,type = &quot;asymp&quot;)[1]</code></pre>
 medci(a, b, se.a, se.b,type = &quot;MC&quot;)[1]</code></pre>
 <pre><code>## $`97.5% CI`
 ##      2.5%     97.5% 
-## 0.2079257 0.5315341</code></pre>
+## 0.2073286 0.5318931</code></pre>
 <p>In R, simple bootstrap confidence intervals can be computed with <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">the mediation package</a></p>
 <p>Here are the results, again in line with the jAMM results.</p>
 <pre class="r"><code>library(mediation,quietly = T)
@@ -423,10 +423,10 @@ summary(med)</code></pre>
 ## Nonparametric Bootstrap Confidence Intervals with the BCa Method
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             0.3565       0.2241         0.53  &lt;2e-16 ***
-## ADE              0.0396      -0.1876         0.29    0.74    
-## Total Effect     0.3961       0.1739         0.64  &lt;2e-16 ***
-## Prop. Mediated   0.9000       0.5567         2.79  &lt;2e-16 ***
+## ACME             0.3565       0.2302         0.53  &lt;2e-16 ***
+## ADE              0.0396      -0.2139         0.30    0.73    
+## Total Effect     0.3961       0.1670         0.64  &lt;2e-16 ***
+## Prop. Mediated   0.9000       0.5718         3.00  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -448,9 +448,6 @@ summary(med)</code></pre>
 <ul>
 <li>
 <a href="rosetta_moderation.html">Rosetta store: moderated mediation</a>
-</li>
-<li>
-<a href="rosetta_simple (dell-desktop's conflicted copy 2018-11-06).html">Rosetta store: simple mediation</a>
 </li>
 <li>
 <a href="rosetta_simple.html">Rosetta store: simple mediation</a>

@@ -1,5 +1,5 @@
 ---
-title: "jAMM: simple mediation"
+title: "jAMM: conditional mediation"
 author: "(Marcello Gallucci)"
 nickname: glm_moderation
 topic: glm
