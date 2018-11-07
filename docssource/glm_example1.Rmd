@@ -86,7 +86,7 @@ Several bootstrap methods can be selected. One of the most used in mediation ana
 To recap, to estimate a simple mediation model, simply select the dependent, the independent, and the mediator variable, and the results will be shown in the results table.
 
 
-If you are intested in checking the convergence of jAMM results with other software results, please visit the rosetta store
+If you are interested in checking the convergence of jAMM results with other software results, please visit the rosetta store
 `r link_pages(nickname="ros_moderation")`
 
 # Other examples

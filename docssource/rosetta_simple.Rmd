@@ -22,12 +22,12 @@ source("../R/functions.R")
 
 `r keywords("jamovi, SPSS, R, PROCESS, mediation")`
 
-`r version("0.0.3")` 
+`r version("0.0.4")` 
 
   
 # Introduction
 
-Here you can find comparisons of  results obtained in jamovi jAMM, jamovi (jmv), pure R, and SPSS. When not explicitely discussed, the code of different software is written with the aim of obtaing equivalent results across programs.
+Here you can find comparisons of  results obtained in jamovi jAMM, jamovi (jmv), pure R, and SPSS. When not explicitly discussed, the code of different software is written with the aim of obtaining equivalent results across programs.
 
 # Simple mediation
 

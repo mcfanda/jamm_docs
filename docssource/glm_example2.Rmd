@@ -22,11 +22,11 @@ source("../R/functions.R")
 
 `r draft`
 
-This example shows how to estimate a conditional (moderated) mediation model with four variables in jAMM. Data come from [Muller, Judd, Yzerbyt, 2005](https://www.ncbi.nlm.nih.gov/pubmed/16393020) and contain variables related to a social dilemma experiment. The dataset can be downloaed [here]()
+This example shows how to estimate a conditional (moderated) mediation model with four variables in jAMM. Data come from [Muller, Judd, Yzerbyt, 2005](https://www.ncbi.nlm.nih.gov/pubmed/16393020) and contain variables related to a social dilemma experiment. The dataset can be downloaded [here](https://github.com/mcfanda/jamm_docs/blob/master/data/muller_mediation.sav)
 
 # Research design
 
-Participants were primed with either “might” or “morality” primes and then engaged in a one-trial prisoner’s dilemma with a fictitious partner. Additionally, participants’ social value orientation (from proself and prosocial) was measured. Social value orientation is a stable trait, which differentiates people in their tendency to cooperate. Because cooperative behavior is known to be linked to expectations about the other cooperation, participants were asked to report their expectations about other’s cooperation. The aim of the study is to show whether prime has an effect on cooperation, if social value orientation moderates the effect of prime, and if expectations have a mediating role in the experimental effects.
+Participants were primed with either “might” or “morality” primes and then engaged in a one-trial prisoner’s dilemma with a fictitious partner. Additionally, participants’ social value orientation (from pro-self and pro-social) was measured. Social value orientation is a stable trait, which differentiates people in their tendency to cooperate. Because cooperative behavior is known to be linked to expectations about the other cooperation, participants were asked to report their expectations about other’s cooperation. The aim of the study is to show whether prime has an effect on cooperation, if social value orientation moderates the effect of prime, and if expectations have a mediating role in the experimental effects.
 
 # Variables
 
@@ -40,7 +40,7 @@ There are four variables:
 
 # Understanding the problem
 
-The mediational model implied by the researcher's hypotheses is: PRIME -> EXP -> BEH. Additionally, the researcher expects SVO to moderate the mediational model, such that the mediation effect through EXP should be different at different levels of SVO. Thus, SVO is the moderator of the mediation model. At this stage, we do not know whether SVO moderates the path PRIME -> EXP or the path EXP - BEH, so we simply estimate SVO moderation effect on both paths. This implies that SVO should be allowed to interact with PRIME in predicting EXP, and to interact with EXP is predicting BEH. Basically, SVO*PRIME interaction should be present in both the mediator model (the one with EXP as dependent variable) and in the full model (the one with BEH as dependent variable)
+The mediation model implied by the researcher's hypotheses is: PRIME -> EXP -> BEH. Additionally, the researcher expects SVO to moderate the mediation model, such that the mediation effect through EXP should be different at different levels of SVO. Thus, SVO is the moderator of the mediation model. At this stage, we do not know whether SVO moderates the path PRIME -> EXP or the path EXP - BEH, so we simply estimate SVO moderation effect on both paths. This implies that SVO should be allowed to interact with PRIME in predicting EXP, and to interact with EXP is predicting BEH. Basically, SVO*PRIME interaction should be present in both the mediator model (the one with EXP as dependent variable) and in the full model (the one with BEH as dependent variable)
 
 
 # Building the model
@@ -99,7 +99,7 @@ In the table we see that `SVO` does not moderate the path from `PRIME` to `EXP` 
 
 After finding a significant interaction, we know that the mediated effect depends on the levels of the moderator. Thus, we should see how the mediated effects look when estimated at different levels of the moderators. We can call these __simple mediated effects__.
 
-Simple mediated effects are in the `Conditional Mediation` results section. The results show three tables, rappresenting the mediated effect (indirect effect), direct effect, and total effect of PRIME to BEH through EXP, for three different levels of the moderator SVO. By default, the three levels are `SVO=mean-SD`, `SVO=mean`, and `SVO=mean+SD`. The levels of the moderator used to computed the conditional mediation can be changed in the `Covariates Scaling` tab.
+Simple mediated effects are in the `Conditional Mediation` results section. The results show three tables, representing the mediated effect (indirect effect), direct effect, and total effect of PRIME to BEH through EXP, for three different levels of the moderator SVO. By default, the three levels are `SVO=mean-SD`, `SVO=mean`, and `SVO=mean+SD`. The levels of the moderator used to computed the conditional mediation can be changed in the `Covariates Scaling` tab.
 
 Let's start by inspecting the results for `SVO=mean`, that show the average mediated effect.
 
@@ -130,7 +130,7 @@ Finally, we can explore what happens for high levels of cooperative attitude (SV
 The mediated effect is larger than for the average SVO, IE=5.38, CI=[1.373, 9.38], beta=.242, z=2.63, p.=.008, and seems to be different from zero. The total effect of PRIME is also larger (8.18). Thus, for high levels of SVO, prime  has a strong effect on behavior, and this effect is partially due to the  mediated effect of expectations.
 
 
-If you are intested in checking the convergence of jAMM results with other software results, please visit the rosetta store
+If you are interested in checking the convergence of jAMM results with other software results, please visit the rosetta store
 `r link_pages(nickname="ros_moderation")`
 
 

@@ -1,8 +1,8 @@
 ---
-title: "Rosetta store: moderated mediation"
+title: "Rosetta store: conditional mediation"
 category: rosetta
 topic: moderation
-nickname: ros_exercise
+nickname: ros_moderation
 author: "(Marcello Gallucci)"
 output: 
   html_document:
@@ -19,6 +19,129 @@ editor_options:
 ```{r echo=FALSE,results='hide'}
 source("../R/functions.R")
 ```
+
+
+`r keywords("jamovi, SPSS, R, PROCESS, mediation")`
+
+`r version("0.0.4")` 
+
+  
+# Introduction
+
+Here you can find comparisons of results obtained in jamovi jAMM, jamovi (jmv), pure R, and SPSS. When not explicitely discussed, the code of different software is written with the aim of obtaing equivalent results across software packages.
+
+# Example
+
+This example shows how to estimate a conditional (moderated) mediation model with four variables in jAMM. Data come from [Muller, Judd, Yzerbyt, 2005](https://www.ncbi.nlm.nih.gov/pubmed/16393020) and contain variables related to a social dilemma experiment. The dataset can be downloaed [here](https://github.com/mcfanda/jamm_docs/blob/master/data/muller_mediation.sav)
+
+A long version of the analyses in jAMM is presented in `r link_pages(nickname="glm_moderation")`.
+
+# Variables and model
+
+There are four variables:
+
+* `prime`: a two-group experimental condition 
+* `EXP`: expectations about the other cooperation
+* `SVO`: continuous measure of social value orientation (higher levels mean more cooperative attitude)
+* `BEH`: behavior, the amount of experimental tokens given to the public good by the participant.
+
+The model we estimated is:
+
+<img src="examples/muller/moderator2.png" class="img-responsive" alt="">
+
+Thus,
+* `prime`: is the independent variable (IV)
+* `EXP`:  is the mediator (ME)
+* `SVO`: is the moderator (MO)
+* `BEH`: is the dependent variable (DV)
+
+All continuous predictors are centered to their means.
+
+# jAMM
+
+Results are composed by 4 tables. The first table reports the interaction involved in the mediation model, namely, the interaction between the IV and the moderator ( `SVO` X `prime`->`EXP`) in predicting the mediator, and between the mediator and the moderator in predicting the DV ( `SVO` X `EXP`->`BEH`).
+
+<img src="examples/muller/interactions.png" class="img-responsive" alt="">
+
+The other three tables report the indirect, direct, and total effect of the IV on the DV at three different levels of the moderator. In this example the three levels of the moderator were `mean+1 SD`,`mean`,`mean-1 SD`.
+
+
+<img src="examples/muller/results1_b.png" class="img-responsive" alt="">
+<img src="examples/muller/results2_b.png" class="img-responsive" alt="">
+<img src="examples/muller/results3_b.png" class="img-responsive" alt="">
+
+Confidence intervals where estimated with bootstrap percentile method.
+
+# R and mediation package
+
+First, we estimate the two model needed to obtain the model parameters using `lm()`
+
+```{r , warning=FALSE}
+# I happened to have the spss version of the data
+library(foreign)
+data<-read.spss("../data/muller_mediation.sav",to.data.frame = T) 
+# set the contrast for dichotomous variable `prime`. Using contr.sum() the variable will be `centered`
+# I use the "minus" before the contr.sum() such that the first group in prime is coded -1, like in jAMM.
+data$cprime<-factor(data$prime)
+contrasts(data$cprime)<--contr.sum(2)
+
+# Mediator model
+mod1<-lm(EXP~cprime*SVO,data=data)
+summary(mod1)
+mod2<-lm(BEH~cprime*SVO+EXP*SVO,data=data)
+summary(mod2)
+## average indirect effect
+mod1$coefficients[2]*mod2$coefficients[4]
+```
+
+We can see that the estimates of the interactions  are identical to the ones obtained with jAMM
+(cf `Moderator effects` table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on `R lavaan package`, that uses the [expected information matrix](http://lavaan.ugent.be/tutorial/est.html) obtain the standard errors.
+
+As regards the mediated effects, from the models we just estimated we can compute the average mediated effect, because the IV and the MO variables are centered to their means. We can use [R package mediation](https://cran.r-project.org/web/packages/mediation/mediation.pdf). Confidence intervals are computed with the bootstrap percentile method. Because we have a moderation, we should tell the `mediate()` command that we want the estimates of mediated effect for SVO equal to its mean. We do that with the `covariate` option.
+
+```{r}
+library(mediation, quietly = T)
+nsim =10 # number of bootstrap samples to draw
+modValue<-mean(data$SVO)
+med<-mediate(mod1,mod2,treat="cprime",mediator = "EXP",covariates=list("SVO"=modValue),sims = nsim,boot = TRUE ,boot.ci.type = "perc")
+
+```
+
+`mediation` package calls the indirect (mediated) effect "ACME" and the direct effect "ADE". We can compare the estimates with the jAMM table `Indirect and direct effects computed for SVO=mean`. We can see that the mediated effect is not exactly equal to the one estimated by jAMM. It is exctely twice as large. The reason is in the way `mediation` package treats the categorical variable. Nontheless, it is just a scaling issue, the remaing of the results are perfectly in line. 
+
+Then, we can test the mediated effect at different levels of the moderator SVO. 
+
+```{r}
+## moderator at 1 SD below the average
+modValue<-mean(data$SVO)-sd(data$SVO)
+med<-mediate(mod1,mod2,treat="cprime",mediator = "EXP",covariates=list("SVO"=modValue),sims = nsim,boot = TRUE ,boot.ci.type = "perc")
+summary(med)
+```
+
+```{r}
+## moderator at 1 SD above the average
+modValue<-mean(data$SVO)+sd(data$SVO)
+med<-mediate(mod1,mod2,treat="cprime",mediator = "EXP",covariates=list("SVO"=modValue),sims = nsim,boot = TRUE ,boot.ci.type = "perc")
+summary(med)
+```
+
+# SPSS PROCESS
+
+To compare jAMM results with  [PROCESS macro](http://www.processmacro.org/download.html) results, we should set up process to estimate [model 59](http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf). In PROCESS, this model is in fact the one with the moderator interacting with both the independent variable and the mediator. WE also need to ask for simple mediated effects computed at the mean, one SD plus, and one SD minus the mean (PROCESS 3 default is to condition the effects at selected percentile values of the moderator).
+
+After that, we obtain the following results. First we look at the interaction table produced by PROCESS and compare it with jAMM `Moderator effect` table. 
+
+Interaction in predicting the mediator `EXP`.
+<img src="examples/muller/process1.png" class="img-responsive" alt="">
+Interactions in predicting the dependent variable `BEH`.
+<img src="examples/muller/process2.png" class="img-responsive" alt="">
+PROCESS gives the F-test, but we can see that it is equivalent to the (square of) z-test in jAMM, to the second significant digit. 
+
+Then we look at the simple mediated effects and direct effects. Also here, we found a very close match. 
+<img src="examples/muller/process3.png" class="img-responsive" alt="">
+
+
+
 
 
 
