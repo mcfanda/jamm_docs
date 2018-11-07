@@ -21,7 +21,7 @@ source("../R/functions.R")
 
 <img src="glm/main.png" class="img-responsive" alt="">
 
-The module estimates a simple, multiple, and conditional mediation model for based on OLS (and maximum likelihood) regression. It encompasses model with continuous and categorical independent variables. 
+The module estimates simple, multiple, and conditional mediation models for based  maximum likelihood regression. It encompasses models with continuous and categorical independent variables. 
 
 
 # Examples
