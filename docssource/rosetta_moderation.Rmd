@@ -101,7 +101,7 @@ As regards the mediated effects, from the models we just estimated we can comput
 
 ```{r}
 library(mediation, quietly = T)
-nsim =10 # number of bootstrap samples to draw
+nsim =1000 # number of bootstrap samples to draw
 modValue<-mean(data$SVO)
 med<-mediate(mod1,mod2,treat="cprime",mediator = "EXP",covariates=list("SVO"=modValue),sims = nsim,boot = TRUE ,boot.ci.type = "perc")
 
