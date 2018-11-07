@@ -326,8 +326,24 @@ div.tocify {
 
 
 <p><strong>jAMM</strong> module for mediation models</p>
-<p><img src="glm/main.png" class="img-responsive" alt=""></p>
+<p><img src="glm/main.png" class="imgN-responsive" alt=""></p>
 <p>The module estimates simple, multiple, and conditional mediation models for based maximum likelihood regression. It encompasses models with continuous and categorical independent variables.</p>
+<div id="variable-role-definition" class="section level1">
+<h1>Variable role definition</h1>
+<p><img src="glm/variables.png" class="img-responsive" alt=""></p>
+<p>Each variable in the model should be defined in terms of role: a dependent variable, one or more mediators, one or more independent variables. Independent variables can be continuous (going in <code>Covariates</code>) or categorical (going in <code>Factors</code>). In case one or more variables should be defined as moderators, they should first be included in the independent variable fields, and then defined as moderators (in <code>Moderators</code> tab).</p>
+</div>
+<div id="model-building" class="section level1">
+<h1>Model building</h1>
+<p>When one defines the roles of the variable, jAMM tries to guess what model the user is estimating, with very simple rules. The independent variables are all considered parallel indepenent variables. The mediators are all inserted as parallel mediators. All effects from the independent variables through the mediators are estimated. In other words, by default the module builds a multiple IV, multiple mediators model, like the example in the Figure with 2 IV and 2 mediatiors.</p>
+<p><img src="glm/variables.png" class="img-responsive" alt=""></p>
+<p>The structure of the model can be changed in the <code>Mediators models</code> and <code>Full model</code> tabs.</p>
+<div id="mediators-models" class="section level2">
+<h2>Mediators models</h2>
+<p><img src="glm/mediators.png" class="img-responsive" alt=""></p>
+<p>In the</p>
+</div>
+</div>
 <div id="examples" class="section level1">
 <h1>Examples</h1>
 <p>Some worked out examples of the analyses carried out with jamovi jAMM are posted here (more to come)</p>

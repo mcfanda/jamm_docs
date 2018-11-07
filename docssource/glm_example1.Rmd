@@ -79,7 +79,7 @@ By default, the jAMM computes the confidence intervals using the _large sample_ 
 
 <img src="examples/virginia_simple/options.png" class="img-responsive" alt="">
 
-Several bootstrap methods can be selected. One of the most used in mediation analysis is the _bias-corrected_ method, which is jAMM is called `bootstrap (BC)`. See here for help on the other options. Please note that the bootstrap method can be very time-consuming and slow.
+Several bootstrap methods can be selected. One of the most used in mediation analysis is the _precentile_ method, which is jAMM is called `bootstrap (Percent)`. See `r link_pages(nickname="glm_help")` for help on the other options. Please note that the bootstrap method can be very time-consuming and slow.
 
 <img src="examples/virginia_simple/results2.png" class="img-responsive" alt="">
 
