@@ -89,4 +89,9 @@ To recap, to estimate a simple mediation model, simply select the dependent, the
 If you are intested in checking the convergence of jAMM results with other software results, please visit the rosetta store
 `r link_pages(nickname="ros_moderation")`
 
+# Other examples
+
+`r include_examples("glm")`
+
+
 `r issues()`

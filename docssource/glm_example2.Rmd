@@ -91,7 +91,7 @@ The `Full model` tab shows that in predicting BEH (i.e the dependent variable), 
 
 # Results
 
-In conditional mediation models, the first think we want to check if the moderator actually has a moderating effect on the components of the mediated effect. We can check that in the results table `Moderation effects (interactions)`. 
+In conditional mediation models, the first thing we want to check is whether the moderator actually has a moderating effect on the components of the mediated effect. We can check that in the results table `Moderation effects (interactions)`. 
 
 <img src="examples/muller/interactions.png" class="img-responsive" alt="">
 

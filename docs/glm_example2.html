@@ -377,7 +377,7 @@ div.tocify {
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
-<p>In conditional mediation models, the first think we want to check if the moderator actually has a moderating effect on the components of the mediated effect. We can check that in the results table <code>Moderation effects (interactions)</code>.</p>
+<p>In conditional mediation models, the first thing we want to check if the moderator actually has a moderating effect on the components of the mediated effect. We can check that in the results table <code>Moderation effects (interactions)</code>.</p>
 <p><img src="examples/muller/interactions.png" class="img-responsive" alt=""></p>
 <p>In the table we see that <code>SVO</code> does not moderate the path from <code>PRIME</code> to <code>EXP</code> (at least not in a substantial way), because the interaction between <code>PRIME</code> and <code>SVO</code> in predicting <code>SVO</code> is not significant. However, <code>SVO</code> moderates the path from <code>EXP</code> to <code>BEH</code>, because the interaction between <code>EXP</code> and <code>SVO</code> in predicting <code>BEH</code> is clearly different from zero. This means that the conditional mediation is due to the fact that when <code>PRIME</code> affects <code>EXP</code>, its effect depends on <code>SVO</code>. This model is sometimes called <em>mediated moderation</em>, because the interaction comes before the mediator in the mediation pathway.</p>
 <p>After finding a significant interaction, we know that the mediated effect depends on the levels of the moderator. Thus, we should see how the mediated effects look when estimated at different levels of the moderators. We can call these <strong>simple mediated effects</strong>.</p>
