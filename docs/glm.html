@@ -11,7 +11,7 @@
 
 
 
-<title>Rosetta store: simple mediation</title>
+<title>GLM mediation models</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -198,7 +198,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify
@@ -261,6 +261,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -314,137 +320,43 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Rosetta store: simple mediation</h1>
+<h1 class="title toc-ignore">GLM mediation models</h1>
 
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> jamovi, SPSS, R, PROCESS, mediation </span></p>
-<p><span class="version"> <span class="versiontitle"> jAMM version ≥ </span> 0.0.4 </span></p>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Here you can find comparisons of results obtained in jamovi jAMM, jamovi (jmv), pure R, and SPSS. When not explicitly discussed, the code of different software is written with the aim of obtaining equivalent results across programs.</p>
+<p><strong>jAMM</strong> module for mediation models</p>
+<p><span class="draft"> Draft version, mistakes may be around </span></p>
+<p><img src="glm/main.png" class="imgN-responsive" alt=""></p>
+<p>The module estimates simple, multiple, and conditional mediation models with maximum likelihood regression. It encompasses models with continuous and categorical independent variables.</p>
+<div id="variable-role-definition" class="section level1">
+<h1>Variable role definition</h1>
+<p><img src="glm/variables.png" class="img-responsive" alt=""></p>
+<p>To estimate a model, the user should define: a dependent variable, one or more mediators, one or more independent variables. Independent variables can be continuous (going in <code>Covariates</code>) or categorical (going in <code>Factors</code>). In case one or more variables is a moderator, it should first be included in the independent variables fields, and then defined as moderator (in <code>Moderators</code> tab).</p>
 </div>
-<div id="simple-mediation" class="section level1">
-<h1>Simple mediation</h1>
-<p>Here we analyze the data discussed in the <a href="glm_example1.html">jAMM: simple mediation</a>. Data can be downloaded from <a href="&#39;http://static.lib.virginia.edu/statlab/materials/data/mediationData.csv&#39;">University of Virginia Research Data Service</a>. Here we renamed the variables:</p>
+<div id="model-building" class="section level1">
+<h1>Model building</h1>
+<p>When one defines the roles of the variable, jAMM tries to guess what model the user is estimating, with very simple rules. The independent variables are all considered parallel indepenent variables. The mediators are all inserted in the model as parallel mediators. All effects from the independent variables through the mediators are estimated. In other words, by default the module builds a multiple IV, multiple mediators model, like the example in the Figure with 2 IV and 2 mediatiors.</p>
+<p><img src="glm/diagram1.png" class="img-responsive" alt=""></p>
+<p>The structure of the model can be changed in the <code>Mediators models</code> and <code>Full model</code> tabs.</p>
+<div id="mediators-models" class="section level2">
+<h2>Mediators models</h2>
+<p><img src="glm/mediators.png" class="img-responsive" alt=""></p>
+<p>In the</p>
+</div>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples</h1>
+<p>Some worked out examples of the analyses carried out with jamovi jAMM are posted here (more to come)</p>
 <ul>
-<li>grades = X</li>
-<li>selfesteem = M</li>
-<li>happiness = Y</li>
+<li>
+<a href="glm_example1.html">jAMM: simple mediation</a>
+</li>
+<li>
+<a href="glm_example2.html">jAMM: conditional mediation</a>
+</li>
 </ul>
-<p>The mediation model is:</p>
-<p><img src="examples/virginia_simple/pathdiagram.png" class="img-responsive" alt=""></p>
-</div>
-<div id="jamm" class="section level1">
-<h1>jAMM</h1>
-<p>As discussed in <a href="glm_example1.html">jAMM: simple mediation</a>, jAMM estimation and standard statistical tests are:</p>
-<p><img src="examples/virginia_simple/results1.png" class="img-responsive" alt=""></p>
-<p>The bootstrap confidence intervals (bias-corrected and accelerated) and z-tests are:</p>
-<p><img src="examples/virginia_simple/results2.png" class="img-responsive" alt=""></p>
-</div>
-<div id="r-lm" class="section level1">
-<h1>R lm()</h1>
-<p>Estimation of the regression coefficients can be obtained in vanilla R with two linear regressions:</p>
-<pre class="r"><code>data&lt;-read.csv(&#39;../data/virginia_simple_mediation.csv&#39;)
-
-mod1&lt;-lm(selfesteem~grades,data=data)
-summary(mod1)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = selfesteem ~ grades, data = data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.3046 -0.8656  0.1344  1.1344  4.6954 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.49952    0.58920   2.545   0.0125 *  
-## grades       0.56102    0.09448   5.938 4.39e-08 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.639 on 98 degrees of freedom
-## Multiple R-squared:  0.2646, Adjusted R-squared:  0.2571 
-## F-statistic: 35.26 on 1 and 98 DF,  p-value: 4.391e-08</code></pre>
-<pre class="r"><code>mod2&lt;-lm(hapiness~selfesteem+grades,data=data)
-summary(mod2)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = hapiness ~ selfesteem + grades, data = data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.7631 -1.2393  0.0308  1.0832  4.0055 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   1.9043     0.6055   3.145   0.0022 ** 
-## selfesteem    0.6355     0.1005   6.321 7.92e-09 ***
-## grades        0.0396     0.1096   0.361   0.7187    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.631 on 97 degrees of freedom
-## Multiple R-squared:  0.373,  Adjusted R-squared:  0.3601 
-## F-statistic: 28.85 on 2 and 97 DF,  p-value: 1.471e-10</code></pre>
-<p>by multiplying 0.561 and 0.6355, one obtains the mediated effect 0.3565, as in jAMM. We can notice that the t-tests in R are slightly different from the z-tests in jAMM. This is simply due to the computation of the standard errors. jAMM is based on <code>R lavaan package</code>, that uses the <a href="http://lavaan.ugent.be/tutorial/est.html">expected information matrix</a> obtain the standard errors.</p>
-</div>
-<div id="c.i.-with-rmediation-package" class="section level1">
-<h1>C.I. with Rmediation package</h1>
-<p>In R, simple mediation models confidence intervals can be computed with <a href="https://cran.r-project.org/web/packages/RMediation/RMediation.pdf">the Rmediation package</a>, which provides several methods of computation.</p>
-<pre class="r"><code>library(RMediation,quietly = T)
-sumr1&lt;-summary(mod1)
-sumr2&lt;-summary(mod2)
-a&lt;-sumr1$coefficients[2,1]
-se.a&lt;-sumr1$coefficients[2,2]
-b&lt;-sumr2$coefficients[2,1]
-se.b&lt;-sumr2$coefficients[2,2]
-
-#### delta method #####
-medci(a, b, se.a, se.b,type = &quot;asymp&quot;)[1]</code></pre>
-<pre><code>## $`97.5% CI`
-## [1] 0.1939949 0.5190495</code></pre>
-<pre class="r"><code>#### Monte Carlo method ####
-medci(a, b, se.a, se.b,type = &quot;MC&quot;)[1]</code></pre>
-<pre><code>## $`97.5% CI`
-##      2.5%     97.5% 
-## 0.2075577 0.5334998</code></pre>
-<p>In R, simple bootstrap confidence intervals can be computed with <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">the mediation package</a></p>
-<p>Here are the results, again in line with the jAMM results.</p>
-<pre class="r"><code>library(mediation,quietly = T)
-
-med&lt;-mediate(mod1, mod2, treat=&#39;grades&#39;, mediator=&#39;selfesteem&#39;, sims=1000, boot = T, boot.ci.type = &quot;bca&quot;)
-summary(med)</code></pre>
-<pre><code>## 
-## Causal Mediation Analysis 
-## 
-## Nonparametric Bootstrap Confidence Intervals with the BCa Method
-## 
-##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             0.3565       0.2179         0.54  &lt;2e-16 ***
-## ADE              0.0396      -0.1867         0.29   0.820    
-## Total Effect     0.3961       0.1281         0.63   0.002 ** 
-## Prop. Mediated   0.9000       0.5801         3.02   0.002 ** 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Sample Size Used: 100 
-## 
-## 
-## Simulations: 1000</code></pre>
-</div>
-<div id="spss-process" class="section level1">
-<h1>SPSS Process</h1>
-<p>In spss, one can estimate simple mediation and get confidence intervals for mediated effect using <a href="http://www.processmacro.org/download.html">PROCESS macro</a>. The results coincide with the jAMM results.</p>
-<p><img src="rosetta/virginia_simple/process.png" class="img-responsive" alt=""></p>
-<p>Recall that PROCESS uses the “percentile” method for bootstrap confidence intervals, thus, to get an even closer match between PROCESS and jAMM, one can ask jAMM to use this method as well. Here are the results, which align to PROCESS results to the second significant digit.</p>
-<p><img src="rosetta/virginia_simple/ci_percent.png" class="img-responsive" alt=""></p>
-<p>Notice that the “Completely standardized indirect effect” in PROCESS corresponds to jAMM <span class="math inline">\(beta\)</span> effect, which is, as the name signals, the mediated effect obtained after standardizing all variables.</p>
-</div>
-<div id="rosettas-files" class="section level1">
-<h1>Rosetta’s files</h1>
+<p>If you are intested in checking the convergence of jAMM results with other software results, please visit:</p>
 <ul>
 <li>
 <a href="rosetta_moderation.html">Rosetta store: conditional mediation</a>
