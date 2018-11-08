@@ -20,6 +20,8 @@ source("../R/functions.R")
 
 **jAMM** module for mediation models
 
+`r draft`
+
 <img src="glm/main.png" class="imgN-responsive" alt="">
 
 The module estimates simple, multiple, and conditional mediation models with maximum likelihood regression. It encompasses models with continuous and categorical independent variables. 
@@ -32,9 +34,9 @@ To estimate a model, the user should define: a dependent variable, one or more m
 
 # Model building
 
-When one defines the roles of the variable, jAMM tries to guess what model the user is estimating, with very simple rules. The independent variables are all considered parallel indepenent variables. The mediators are all inserted as parallel mediators. All effects from the independent variables through the mediators are estimated. In other words, by default the module builds a multiple IV, multiple mediators model, like the example in the Figure with 2 IV and 2 mediatiors.
+When one defines the roles of the variable, jAMM tries to guess what model the user is estimating, with very simple rules. The independent variables are all considered parallel indepenent variables. The mediators are all inserted in the model as parallel mediators. All effects from the independent variables through the mediators are estimated. In other words, by default the module builds a multiple IV, multiple mediators model, like the example in the Figure with 2 IV and 2 mediatiors.
 
-<img src="glm/variables.png" class="img-responsive" alt="">
+<img src="glm/diagram1.png" class="img-responsive" alt="">
 
 The structure of the model can be changed in the `Mediators models` and `Full model` tabs.
 
