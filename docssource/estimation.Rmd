@@ -1,0 +1,34 @@
+---
+title: "jAMM: Model estimates"
+author: "(Marcello Gallucci)"
+nickname: estimation
+topic: glm
+category: help
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+```{r echo=FALSE,results='hide'}
+source("../R/functions.R")
+```
+
+
+`r keywords("Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test")`
+
+
+
+# List of docs
+
+`r list_pages(category="help")`
+
+# Examples
+
+`r include_examples("glm")`
+
+
+`r issues()`

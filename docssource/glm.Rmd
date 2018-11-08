@@ -34,18 +34,117 @@ To estimate a model, the user should define: a dependent variable, one or more m
 
 # Model building
 
-When one defines the roles of the variable, jAMM tries to guess what model the user is estimating, with very simple rules. The independent variables are all considered parallel indepenent variables. The mediators are all inserted in the model as parallel mediators. All effects from the independent variables through the mediators are estimated. In other words, by default the module builds a multiple IV, multiple mediators model, like the example in the Figure with 2 IV and 2 mediatiors.
+When one defines the roles of the variable, jAMM tries to guess what model the user is estimating, with very simple rules. The independent variables are all considered parallel indepenent variables. The mediators are all inserted in the model as parallel mediators. All effects from the independent variables through the mediators are estimated. In other words, by default the module builds a multiple IV, multiple mediators model, like the example in the Figure with 2 IV and 2 mediatiors. In the simple case of three variables model (simple mediation), one obtains the standard mediation trianglular model.
 
 <img src="glm/diagram1.png" class="img-responsive" alt="">
 
-The structure of the model can be changed in the `Mediators models` and `Full model` tabs.
+When there are more independent variables and mediatiators, the rules described above apply. For two IV and two ME, the default model is as in the following Figure.
+
+<img src="glm/diagram2.png" class="img-responsive" alt="">
+
+The structure of the model can be changed in the `Mediators models` and `Full model` tabs. See `r link_pages(nickname="model_building")` for examples on building models.
 
 ## Mediators models
 
 <img src="glm/mediators.png" class="img-responsive" alt="">
 
+The tab shows the mediators models, the models with mediators as dependent variable. On the right (`Models for mediators`) one field for each mediator is shown. There, the user can define the predictors of each mediator. See `r link_pages(nickname="model_building")` for examples on building models.
 
-In the 
+## Full model
+
+<img src="glm/full.png" class="img-responsive" alt="">
+
+The tab shows the full model, that is the model predicting the dependent variable. On the right (`Model terms`), oen can put all the model terms required. By default, jAMM puts in the model terms all the mediators and the mediators predictors. See `r link_pages(nickname="model_building")` for examples on building models.
+
+# Results
+
+## Models Info
+
+When variables roles are yet not defined, the table shows some suggestions to get the user started. When the variables and the models are defined, the table shows the linear equations needed to estimate the model, and the indirect (mediated) effects involved in the model. If something goes wrong with the model specification, warnings are issued. The main reason a warning is issued is the specification of an incomplete or absurd model. The path diagram also signals problems in the model.  
+
+## Diagram
+
+Upon defining variables and models terms, the path diagram is generated. This type of diagram is often called _model diagram_ or _conceptual model_ as opposed to the _working model_, which shows all terms and all estimated statistical paths. Without moderators, the _model diagram_ corresponds to the _working model_ but does not show the covariances between independent variables.
+
+The diagram shows the model implied by the `Mediators models` and the `Full model` terms. The estimated paths (coefficients) are shown in black. Required variables or required paths are shown in red. A required path, for instance, can be a path from the IV to the mediator. The diagram also shows impossible paths in purple. Impossible paths are paths that do not make sense in terms of mediation, not necessarily in terms of statistical estimability. For instance, a model with two mediators `m1` and `m2`, in which the user defines a path from `m1` to `m2` and a path from `m2` to `m1` is deemed as impossible, because this king of models are not mediation models. An example is in the Figure.
+
+<img src="glm/impossible.png" class="img-responsive" alt="">
+
+The diagram also shows _suggested_ paths (in green). Those are paths whose absence does not invalidate the model, but may require extra care in interpreting the results. Suggested paths may be hidden in the `Mediation options` tab. 
+
+## Effect estimates
+
+For models without interactions, jAMM produces a table that show the `Indirect effects` (mediated), the `Direct effects`, and the `Total effects`. The example below shows results of a model with one IV (`x1`), two parallel mediators (`m1`, `m2`) and a DV (`y`).
+
+<img src="glm/results1.png" class="img-responsive" alt="">
+
+`Indirect effects` are the mediated effects. The `Effect` column indicates which mediated effect is shown in the corresponding row. `Estimate` reportes the estimation of the mediated effect. The columns are self-explanatory. See `r link_pages(nickname="estimation")` for details.
+
+The direct effects are the effects computed keeping the mediators constant, thus the un-mediated effects. The total effects are the effects computed without the mediators, or, equivalently, the sum of the indirect and the direct effects.
+
+If requested in the `Mediation options` tab by ticking `Components` one can see in the table also the components of the indirect effects. The components are the coefficients that are multiplied to obtain the indirect effects. In simple mediation, for instance, if the models are $m=a \cdot x$ and $y= b \cdot m + c \cdot x$, the mediated effect is $IE=a \cdot b$ and $a$ and $b$ are its components. 
+
+In the example shown in the table above, asking the `Components` yields:
+
+<img src="glm/components.png" class="img-responsive" alt="">
+
+
+
+# Moderators
+
+<img src="glm/moderators.png" class="img-responsive" alt="">
+
+Moderators are variables expected to moderate the indirect effects. In the tab, one can define one or more moderators for each mediator. That is equivalent to declaring one or more moderators for each IE. When a moderator is defined, jAMM updates the `Mediators models` and the `Full model` to include the interactions required to build the model. The user can then tweak, but also completely change, the model changing the terms in the `Mediators models` and the `Full model` tabs. 
+
+Declaring the moderator(s), however, triggers jAMM to nicely display the moderator in the model diagram and to compute simple indirect effects, that is, indirect effects computed at different levels of the moderators. What levels are used is ruled by `Factor coding` and `Covariates scaling` options.
+
+Two important caveats should be noted:
+
+### 1) Adding moderators
+
+To add a moderator, there should be at leat another independent variable in the medatiators models. For example, if the users defines `x1` and `x2` in the `mediators models`, jAMM allows one of them (say `x1`) to be a moderator. However, if the user tries to add also `x2` as moderator, a warning is issued because with two moderators, there are no IV left to be moderated. An example is in the Figure shows the warning that appears if the users tries to add `x2` as a moderator of the model.
+
+<img src="glm/warning1.png" class="img-responsive" alt="">
+
+
+
+See `r link_pages(nickname="moderator_building")` for examples on building models with moderators.
+
+### 2) Interactions without moderators
+
+jAMM allows to define interactions in the model without specifying a moderator (see example in the following Figure).
+
+<img src="glm/nomod.png" class="img-responsive" alt="">
+
+This features allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediation effects. 
+
+See `r link_pages(nickname="moderator_building")` for examples on building models with moderators.
+
+# Factors coding
+
+<img src="commons/pics/factorCoding.png" class="img-responsive" alt="">
+
+```{Call_child, child='commons/factorCoding_chunk.Rmd'}
+```
+
+More details and examples `r link_pages("ros_contrasts")`.
+
+
+# Covariates Scaling
+<img src="commons/pics/xscoring.png" class="img-responsive" alt="">
+
+Continuous variables can be centered, standardized or used as they are (`none`). The default is `centered` because it makes our lives much easier when there are interactions in the model. If one needs to _unscale_ the variable, simply select `none`.
+
+
+```{Call_child, child='commons/covariateScaling_chunk.Rmd'}
+```
+
+
+# List of docs
+
+
+`r list_pages(category="help")`
+
 
 # Examples
 
