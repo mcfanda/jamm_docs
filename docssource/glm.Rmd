@@ -74,7 +74,7 @@ The diagram also shows _suggested_ paths (in green). Those are paths whose absen
 
 ## Effect estimates
 
-For models without interactions, jAMM produces a table that show the `Indirect effects` (mediated), the `Direct effects`, and the `Total effects`. The example below shows results of a model with one IV (`x1`), two parallel mediators (`m1`, `m2`) and a DV (`y`).
+For models without interactions, jAMM produces a table showing the `Indirect effects` (mediated), the `Direct effects`, and the `Total effects`. The example below shows results for a model with one IV (`x1`), two parallel mediators (`m1`, `m2`) and a DV (`y`).
 
 <img src="glm/results1.png" class="img-responsive" alt="">
 
@@ -116,7 +116,7 @@ jAMM allows to define interactions in the model without specifying a moderator (
 
 <img src="glm/nomod.png" class="img-responsive" alt="">
 
-This features allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediation effects. 
+This feature allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediation effects. 
 
 See `r link_pages(nickname="moderator_building")` for examples on building models with moderators.
 

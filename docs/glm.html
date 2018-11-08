@@ -367,7 +367,7 @@ div.tocify {
 </div>
 <div id="effect-estimates" class="section level2">
 <h2>Effect estimates</h2>
-<p>For models without interactions, jAMM produces a table that show the <code>Indirect effects</code> (mediated), the <code>Direct effects</code>, and the <code>Total effects</code>. The example below shows results of a model with one IV (<code>x1</code>), two parallel mediators (<code>m1</code>, <code>m2</code>) and a DV (<code>y</code>).</p>
+<p>For models without interactions, jAMM produces a table showing the <code>Indirect effects</code> (mediated), the <code>Direct effects</code>, and the <code>Total effects</code>. The example below shows results for a model with one IV (<code>x1</code>), two parallel mediators (<code>m1</code>, <code>m2</code>) and a DV (<code>y</code>).</p>
 <p><img src="glm/results1.png" class="img-responsive" alt=""></p>
 <p><code>Indirect effects</code> are the mediated effects. The <code>Effect</code> column indicates which mediated effect is shown in the corresponding row. <code>Estimate</code> reportes the estimation of the mediated effect. The columns are self-explanatory. See <a href="estimation.html">jAMM: Model estimates</a> for details.</p>
 <p>The direct effects are the effects computed keeping the mediators constant, thus the un-mediated effects. The total effects are the effects computed without the mediators, or, equivalently, the sum of the indirect and the direct effects.</p>
@@ -392,7 +392,7 @@ div.tocify {
 <h3>2) Interactions without moderators</h3>
 <p>jAMM allows to define interactions in the model without specifying a moderator (see example in the following Figure).</p>
 <p><img src="glm/nomod.png" class="img-responsive" alt=""></p>
-<p>This features allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediation effects.</p>
+<p>This feature allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediation effects.</p>
 <p>See <a href="moderator_building.html">jAMM: Building conditional models</a> for examples on building models with moderators.</p>
 </div>
 </div>
