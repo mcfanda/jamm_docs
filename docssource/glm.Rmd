@@ -28,7 +28,7 @@ The module estimates simple, multiple, and conditional mediation models with max
 
 <img src="glm/variables.png" class="img-responsive" alt="">
 
-Each variable in the model should have one of these roles: a dependent variable, one or more mediators, one or more independent variables. Independent variables can be continuous (going in `Covariates`) or categorical (going in  `Factors`). In case one or more variables should be defined as moderators, they should first be included in the independent variable fields, and then defined as moderators (in `Moderators` tab). 
+To estimate a model, the user should define: a dependent variable, one or more mediators, one or more independent variables. Independent variables can be continuous (going in `Covariates`) or categorical (going in  `Factors`). In case one or more variables is a moderator, it should first be included in the independent variables fields, and then defined as moderator (in `Moderators` tab). 
 
 # Model building
 
