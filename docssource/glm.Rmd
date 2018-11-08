@@ -94,7 +94,7 @@ In the example shown in the table above, asking the `Components` yields:
 
 <img src="glm/moderators.png" class="img-responsive" alt="">
 
-Moderators are variables expected to moderate the indirect effects. In the tab, one can define one or more moderators for each mediator. That is equivalent to declaring one or more moderators for each IE. When a moderator is defined, jAMM updates the `Mediators models` and the `Full model` to include the interactions required to build the model. The user can then tweak, but also completely change, the model changing the terms in the `Mediators models` and the `Full model` tabs. 
+Moderators are variables expected to moderate the indirect effects. In the tab, one can define one or more moderators for each mediator. That is equivalent to declaring one or more moderators for each IE. When a moderator is defined, jAMM updates the `Mediators models` and the `Full model` to include the interactions required to build the model. The user can then tweak the model, but also completely change it, by changing the terms in the `Mediators models` and the `Full model` tabs. 
 
 Declaring the moderator(s), however, triggers jAMM to nicely display the moderator in the model diagram and to compute simple indirect effects, that is, indirect effects computed at different levels of the moderators. What levels are used is ruled by `Factor coding` and `Covariates scaling` options.
 
@@ -116,7 +116,7 @@ jAMM allows to define interactions in the model without specifying a moderator (
 
 <img src="glm/nomod.png" class="img-responsive" alt="">
 
-This feature allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediation effects. 
+This feature allows users to define an interaction effect that will be treated as an additional term of the mediation model. Thus, no simple indirect effects will be computed. Nontheless, the model may be perfectly fine and the user may have good reasons to insert an interaction without explicitely define a moderator. The feature also allows estimating very complex models with several interactions, not all of them interesting from the point of view of the mediated effects. 
 
 See `r link_pages(nickname="moderator_building")` for examples on building models with moderators.
 
