@@ -418,8 +418,15 @@ mod1$coefficients[2]*mod2$coefficients[4]</code></pre>
 ## 2.260951</code></pre>
 <p>We can see that the estimates of the interactions are identical to the ones obtained with jAMM (cf <code>Moderator effects</code> table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on <code>R lavaan package</code>, that uses the <a href="http://lavaan.ugent.be/tutorial/est.html">expected information matrix</a> obtain the standard errors.</p>
 <p>As regards the mediated effects, from the models we just estimated we can compute the average mediated effect, because the IV and the MO variables are centered to their means. We can use <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">R package mediation</a>. Confidence intervals are computed with the bootstrap percentile method. Because we have a moderation, we should tell the <code>mediate()</code> command that we want the estimates of mediated effect for SVO equal to its mean. We do that with the <code>covariate</code> option.</p>
-<pre class="r"><code>library(mediation, quietly = T)
-nsim =1000 # number of bootstrap samples to draw
+<pre class="r"><code>library(mediation, quietly = T)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:Rsearchable&#39;:
+## 
+##     select</code></pre>
+<pre><code>## mediation: Causal Mediation Analysis
+## Version: 4.4.6</code></pre>
+<pre class="r"><code>nsim =1000 # number of bootstrap samples to draw
 modValue&lt;-mean(data$SVO)
 med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
 <p><code>mediation</code> package calls the indirect (mediated) effect “ACME” and the direct effect “ADE”. We can compare the estimates with the jAMM table <code>Indirect and direct effects computed for SVO=mean</code>. We can see that the mediated effect is not exactly equal to the one estimated by jAMM. It is exctely twice as large. The reason is in the way <code>mediation</code> package treats the categorical variable. Nontheless, it is just a scaling issue, the remaing of the results are perfectly in line.</p>
@@ -436,10 +443,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value
-## ACME             -1.178       -3.977         0.76    0.31
-## ADE               4.223       -1.457         9.85    0.15
-## Total Effect      3.045       -2.227         8.55    0.29
-## Prop. Mediated   -0.387       -4.787         3.84    0.52
+## ACME             -1.178       -4.046         0.61    0.27
+## ADE               4.223       -1.029         9.85    0.12
+## Total Effect      3.045       -2.203         8.20    0.28
+## Prop. Mediated   -0.387       -4.426         6.35    0.51
 ## 
 ## Sample Size Used: 100 
 ## 
@@ -457,10 +464,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value   
-## ACME             10.753        3.456        19.29   0.008 **
-## ADE               4.454       -1.547        11.27   0.170   
-## Total Effect     15.208        6.249        24.40   0.002 **
-## Prop. Mediated    0.707        0.382         1.16   0.006 **
+## ACME             10.753        3.569         19.6   0.002 **
+## ADE               4.454       -2.141         10.8   0.148   
+## Total Effect     15.208        5.807         24.6   0.002 **
+## Prop. Mediated    0.707        0.344          1.2   0.004 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
