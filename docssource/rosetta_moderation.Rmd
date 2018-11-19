@@ -66,11 +66,9 @@ Results are composed by 4 tables. The first table reports the interaction involv
 The other three tables report the indirect, direct, and total effect of the IV on the DV at three different levels of the moderator. In this example the three levels of the moderator were `mean+1 SD`,`mean`,`mean-1 SD`.
 
 
-<img src="examples/muller/results1_b.png" class="img-responsive" alt="">
-<img src="examples/muller/results2_b.png" class="img-responsive" alt="">
-<img src="examples/muller/results3_b.png" class="img-responsive" alt="">
+<img src="examples/muller/results0_b.png" class="img-responsive" alt="">
 
-Confidence intervals where estimated with bootstrap percentile method.
+Confidence intervals where estimated with bootstrap percentile method (keep in mind that jAMM bootstrap the full mediation model for each level of the moderator, so the bootstrap can be quite slow).
 
 # R and mediation package
 
@@ -127,7 +125,7 @@ summary(med)
 
 # SPSS PROCESS
 
-To compare jAMM results with  [PROCESS macro](http://www.processmacro.org/download.html) results, we should set up process to estimate [model 59](http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf). In PROCESS, this model is in fact the one with the moderator interacting with both the independent variable and the mediator. WE also need to ask for simple mediated effects computed at the mean, one SD plus, and one SD minus the mean (PROCESS 3 default is to condition the effects at selected percentile values of the moderator).
+To compare jAMM results with  [PROCESS macro](http://www.processmacro.org/download.html) results, we should set up PROCESS to estimate [model 59](http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf). In PROCESS, this model is in fact the one with the moderator interacting with both the independent variable and the mediator. WE also need to ask for simple mediated effects computed at the mean, one SD plus, and one SD minus the mean (PROCESS 3 default is to condition the effects at selected percentile values of the moderator).
 
 After that, we obtain the following results. First we look at the interaction table produced by PROCESS and compare it with jAMM `Moderator effect` table. 
 

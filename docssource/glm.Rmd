@@ -139,6 +139,7 @@ Continuous variables can be centered, standardized or used as they are (`none`).
 ```{Call_child, child='commons/covariateScaling_chunk.Rmd'}
 ```
 
+[to be continued]
 
 # List of docs
 

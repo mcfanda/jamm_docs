@@ -27,13 +27,13 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110344212-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129366054-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-110344212-1');
+  gtag('config', 'UA-129366054-1');
 </script>
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -379,16 +379,17 @@ div.tocify {
 <h1>Results</h1>
 <p>In conditional mediation models, the first thing we want to check is whether the moderator actually has a moderating effect on the components of the mediated effect. We can check that in the results table <code>Moderation effects (interactions)</code>.</p>
 <p><img src="examples/muller/interactions.png" class="img-responsive" alt=""></p>
-<p>In the table we see that <code>SVO</code> does not moderate the path from <code>PRIME</code> to <code>EXP</code> (at least not in a substantial way), because the interaction between <code>PRIME</code> and <code>SVO</code> in predicting <code>SVO</code> is not significant. However, <code>SVO</code> moderates the path from <code>EXP</code> to <code>BEH</code>, because the interaction between <code>EXP</code> and <code>SVO</code> in predicting <code>BEH</code> is clearly different from zero. This means that the conditional mediation is due to the fact that when <code>PRIME</code> affects <code>EXP</code>, its effect depends on <code>SVO</code>. This model is sometimes called <em>mediated moderation</em>, because the interaction comes before the mediator in the mediation pathway.</p>
+<p>In the table we see that <code>SVO</code> does not moderate the path from <code>PRIME</code> to <code>EXP</code> (at least not in a substantial way), because the interaction between <code>PRIME</code> and <code>SVO</code> in predicting <code>EXP</code> is not significant. However, <code>SVO</code> moderates the path from <code>EXP</code> to <code>BEH</code>, because the interaction between <code>EXP</code> and <code>SVO</code> in predicting <code>BEH</code> is clearly different from zero. This means that the conditional mediation is due to the fact that when <code>PRIME</code> affects <code>EXP</code>, its effect depends on <code>SVO</code>. This model is sometimes called <em>mediated moderation</em>, because the interaction comes before the mediator in the mediation pathway.</p>
 <p>After finding a significant interaction, we know that the mediated effect depends on the levels of the moderator. Thus, we should see how the mediated effects look when estimated at different levels of the moderators. We can call these <strong>simple mediated effects</strong>.</p>
-<p>Simple mediated effects are in the <code>Conditional Mediation</code> results section. The results show three tables, representing the mediated effect (indirect effect), direct effect, and total effect of PRIME to BEH through EXP, for three different levels of the moderator SVO. By default, the three levels are <code>SVO=mean-SD</code>, <code>SVO=mean</code>, and <code>SVO=mean+SD</code>. The levels of the moderator used to computed the conditional mediation can be changed in the <code>Covariates Scaling</code> tab.</p>
-<p>Let’s start by inspecting the results for <code>SVO=mean</code>, that show the average mediated effect.</p>
+<p>Simple mediated effects are in the <code>Conditional Mediation</code> results section. The results show the mediatated (indirect), direct, and total effects at different levels of the moderators. By default, the levels of the moderators are <code>SVO=mean-SD</code>, <code>SVO=mean</code>, and <code>SVO=mean+SD</code>. The levels of the moderator used to computed the conditional mediation parameters can be changed in the <code>Covariates Scaling</code> tab.</p>
+<p><img src="examples/muller/results0.png" class="img-responsive" alt=""></p>
+<p>Let’s start by inspecting the results for <code>SVO=Mean</code>, that show the average mediated effect.</p>
 <p><img src="examples/muller/results1.png" class="img-responsive" alt=""></p>
 <p>The <code>Indirect</code> row reports the <em>mediated effect</em>. Thus, this is the classical <span class="math inline">\(a \cdot b\)</span> mediation effect, where <span class="math inline">\(a\)</span> is the coefficient from <code>PRIME</code> to <code>EXP</code> and <span class="math inline">\(b\)</span> is the coefficient from <code>EXP</code> to <code>BEH</code>, <em>computed for the average level of SVO</em>. In other words, this is the average mediated effect across levels of the moderator. The Coefficients <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the components of the mediated effect, and you can see them in the table in the <code>Component</code> rows. As expected, <span class="math inline">\(a \cdot b= 2.692 \cdot .840 = 2.261\)</span>.</p>
 <p>The <code>z</code> test associated with the mediated effect is the <em>large sample</em> z test of the mediated effect, which is a slightly more accurate version of the Sobel test. The confidence intervals are also computed using <em>large sample</em> approximation, but the bootstrap version of confidence intervals can be asked in the <code>Mediation options</code> tab (see below).</p>
 <p>The <code>Direct</code> row shows the effect of the independent variable not mediated by <code>EXP</code> computed for the average level of <code>SVO</code>. The coefficient is usually denoted by <span class="math inline">\(c^\prime\)</span> in the mediation jargon. The <code>Total</code> effect is the overall effect of <code>prime</code> on <code>BEH</code>, that is <span class="math inline">\(c=a \cdot b + c^\prime\)</span>, again computed for the average level of <code>SVO</code>. All the <code>z</code> tests associated with these coefficients test the null-hypothesis that the corresponding coefficient is zero. Confidence intervals are computed with the same method used for the indirect effect.</p>
 <p>The <span class="math inline">\(\beta\)</span> column shows the standardized solution coefficients.</p>
-<p>As regards the confidence intervals, jAMM computes the confidence intervals using the <em>large sample</em> delta method, that is using the z test as the starting point of computation. However, often users prefer to use a bootstrap method. That can be done in the <code>Mediation options</code> tab.</p>
+<p>As regards the confidence intervals, by default jAMM computes the confidence intervals using the <em>large sample</em> delta method, that is using the z test as the starting point of computation. However, often users prefer to use a bootstrap method. That can be done in the <code>Mediation options</code> tab. Details of the methods can be found in the <a href="https://www.jstatsoft.org/article/view/v048i02/v48i02.pdf">lavaan R package</a>.</p>
 <p>Thus, we can say that for the average level of SVO (mildly cooperative people), <em>expectations</em> mediate the effect of <em>prime</em> on <em>behavior</em>, IE=2.261, CI=[.862,3.66],beta=.147, z=3.17, p.=.002.</p>
 <p>We can now explore what happens for low levels of cooperative attitude (SVO=mean-SD).</p>
 <p><img src="examples/muller/results2.png" class="img-responsive" alt=""></p>
@@ -396,6 +397,8 @@ div.tocify {
 <p>Finally, we can explore what happens for high levels of cooperative attitude (SVO=mean+SD).</p>
 <p><img src="examples/muller/results3.png" class="img-responsive" alt=""></p>
 <p>The mediated effect is larger than for the average SVO, IE=5.38, CI=[1.373, 9.38], beta=.242, z=2.63, p.=.008, and seems to be different from zero. The total effect of PRIME is also larger (8.18). Thus, for high levels of SVO, prime has a strong effect on behavior, and this effect is partially due to the mediated effect of expectations.</p>
+<p>If you prefer to have a shorter table of conditional mediation effects, you can ask to hide the components of the mediated effects in the <code>Mediation options</code> tab. That produces a simpler table.</p>
+<p><img src="examples/muller/results4.png" class="img-responsive" alt=""></p>
 <p>If you are interested in checking the convergence of jAMM results with other software results, please visit the rosetta store <a href="rosetta_moderation.html">Rosetta store: conditional mediation</a></p>
 <h1>
 Comments?

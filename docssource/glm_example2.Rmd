@@ -95,13 +95,15 @@ In conditional mediation models, the first thing we want to check is whether the
 
 <img src="examples/muller/interactions.png" class="img-responsive" alt="">
 
-In the table we see that `SVO` does not moderate the path from `PRIME` to `EXP` (at least not in a substantial way), because the interaction between `PRIME` and `SVO` in predicting `SVO` is not significant. However, `SVO` moderates the path from `EXP` to `BEH`, because the interaction between `EXP` and `SVO` in predicting `BEH` is clearly different from zero. This means that the conditional mediation is due to the fact that when `PRIME` affects `EXP`, its effect depends on `SVO`. This model is sometimes called _mediated moderation_, because the interaction comes before the mediator in the mediation pathway. 
+In the table we see that `SVO` does not moderate the path from `PRIME` to `EXP` (at least not in a substantial way), because the interaction between `PRIME` and `SVO` in predicting `EXP` is not significant. However, `SVO` moderates the path from `EXP` to `BEH`, because the interaction between `EXP` and `SVO` in predicting `BEH` is clearly different from zero. This means that the conditional mediation is due to the fact that when `PRIME` affects `EXP`, its effect depends on `SVO`. This model is sometimes called _mediated moderation_, because the interaction comes before the mediator in the mediation pathway. 
 
 After finding a significant interaction, we know that the mediated effect depends on the levels of the moderator. Thus, we should see how the mediated effects look when estimated at different levels of the moderators. We can call these __simple mediated effects__.
 
-Simple mediated effects are in the `Conditional Mediation` results section. The results show three tables, representing the mediated effect (indirect effect), direct effect, and total effect of PRIME to BEH through EXP, for three different levels of the moderator SVO. By default, the three levels are `SVO=mean-SD`, `SVO=mean`, and `SVO=mean+SD`. The levels of the moderator used to computed the conditional mediation can be changed in the `Covariates Scaling` tab.
+Simple mediated effects are in the `Conditional Mediation` results section. The results show the mediatated (indirect), direct, and total effects at different levels of the moderators. By default, the levels of the moderators are `SVO=mean-SD`, `SVO=mean`, and `SVO=mean+SD`. The levels of the moderator used to computed the conditional mediation parameters can be changed in the `Covariates Scaling` tab.
 
-Let's start by inspecting the results for `SVO=mean`, that show the average mediated effect.
+<img src="examples/muller/results0.png" class="img-responsive" alt="">
+
+Let's start by inspecting the results for `SVO=Mean`, that show the average mediated effect.
 
 <img src="examples/muller/results1.png" class="img-responsive" alt="">
 
@@ -113,7 +115,7 @@ The `Direct` row shows the effect of the independent variable not mediated by `E
 
 The $\beta$ column shows the standardized solution coefficients.
 
-As regards the confidence intervals, jAMM computes the confidence intervals using the _large sample_ delta method, that is using the z test as the starting point of computation. However, often users prefer to use a bootstrap method. That can be done in the  `Mediation options` tab.
+As regards the confidence intervals, by default jAMM computes the confidence intervals using the _large sample_ delta method, that is using the z test as the starting point of computation. However, often users prefer to use a bootstrap method. That can be done in the  `Mediation options` tab. Details of the methods can be found in the [lavaan R package](https://www.jstatsoft.org/article/view/v048i02/v48i02.pdf).
 
 Thus, we can say that for the average level of SVO (mildly cooperative people), _expectations_ mediate the effect of _prime_ on _behavior_, IE=2.261, CI=[.862,3.66],beta=.147, z=3.17, p.=.002.
 
@@ -128,6 +130,10 @@ Finally, we can explore what happens for high levels of cooperative attitude (SV
 <img src="examples/muller/results3.png" class="img-responsive" alt="">
 
 The mediated effect is larger than for the average SVO, IE=5.38, CI=[1.373, 9.38], beta=.242, z=2.63, p.=.008, and seems to be different from zero. The total effect of PRIME is also larger (8.18). Thus, for high levels of SVO, prime  has a strong effect on behavior, and this effect is partially due to the  mediated effect of expectations.
+
+If you prefer to have a shorter table of conditional mediation effects, you can ask to hide the components of the mediated effects in the `Mediation options` tab. That produces a simpler table.
+
+<img src="examples/muller/results4.png" class="img-responsive" alt="">
 
 
 If you are interested in checking the convergence of jAMM results with other software results, please visit the rosetta store

@@ -27,13 +27,13 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110344212-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129366054-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-110344212-1');
+  gtag('config', 'UA-129366054-1');
 </script>
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -351,8 +351,8 @@ div.tocify {
 <p>Results are composed by 4 tables. The first table reports the interaction involved in the mediation model, namely, the interaction between the IV and the moderator ( <code>SVO</code> X <code>prime</code>-&gt;<code>EXP</code>) in predicting the mediator, and between the mediator and the moderator in predicting the DV ( <code>SVO</code> X <code>EXP</code>-&gt;<code>BEH</code>).</p>
 <p><img src="examples/muller/interactions.png" class="img-responsive" alt=""></p>
 <p>The other three tables report the indirect, direct, and total effect of the IV on the DV at three different levels of the moderator. In this example the three levels of the moderator were <code>mean+1 SD</code>,<code>mean</code>,<code>mean-1 SD</code>.</p>
-<p><img src="examples/muller/results1_b.png" class="img-responsive" alt=""> <img src="examples/muller/results2_b.png" class="img-responsive" alt=""> <img src="examples/muller/results3_b.png" class="img-responsive" alt=""></p>
-<p>Confidence intervals where estimated with bootstrap percentile method.</p>
+<p><img src="examples/muller/results0_b.png" class="img-responsive" alt=""></p>
+<p>Confidence intervals where estimated with bootstrap percentile method (keep in mind that jAMM bootstrap the full mediation model for each level of the moderator, so the bootstrap can be quite slow).</p>
 </div>
 <div id="r-and-mediation-package" class="section level1">
 <h1>R and mediation package</h1>
@@ -443,10 +443,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value
-## ACME             -1.178       -4.046         0.61    0.27
-## ADE               4.223       -1.029         9.85    0.12
-## Total Effect      3.045       -2.203         8.20    0.28
-## Prop. Mediated   -0.387       -4.426         6.35    0.51
+## ACME             -1.178       -4.118         0.74    0.26
+## ADE               4.223       -1.565        10.02    0.14
+## Total Effect      3.045       -2.720         8.38    0.27
+## Prop. Mediated   -0.387       -4.295         2.68    0.47
 ## 
 ## Sample Size Used: 100 
 ## 
@@ -464,10 +464,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value   
-## ACME             10.753        3.569         19.6   0.002 **
-## ADE               4.454       -2.141         10.8   0.148   
-## Total Effect     15.208        5.807         24.6   0.002 **
-## Prop. Mediated    0.707        0.344          1.2   0.004 **
+## ACME             10.753        3.601        18.49   0.010 **
+## ADE               4.454       -2.076        10.66   0.172   
+## Total Effect     15.208        5.692        24.25   0.006 **
+## Prop. Mediated    0.707        0.371         1.19   0.008 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -478,7 +478,7 @@ summary(med)</code></pre>
 </div>
 <div id="spss-process" class="section level1">
 <h1>SPSS PROCESS</h1>
-<p>To compare jAMM results with <a href="http://www.processmacro.org/download.html">PROCESS macro</a> results, we should set up process to estimate <a href="http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf">model 59</a>. In PROCESS, this model is in fact the one with the moderator interacting with both the independent variable and the mediator. WE also need to ask for simple mediated effects computed at the mean, one SD plus, and one SD minus the mean (PROCESS 3 default is to condition the effects at selected percentile values of the moderator).</p>
+<p>To compare jAMM results with <a href="http://www.processmacro.org/download.html">PROCESS macro</a> results, we should set up PROCESS to estimate <a href="http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf">model 59</a>. In PROCESS, this model is in fact the one with the moderator interacting with both the independent variable and the mediator. WE also need to ask for simple mediated effects computed at the mean, one SD plus, and one SD minus the mean (PROCESS 3 default is to condition the effects at selected percentile values of the moderator).</p>
 <p>After that, we obtain the following results. First we look at the interaction table produced by PROCESS and compare it with jAMM <code>Moderator effect</code> table.</p>
 <p>Interaction in predicting the mediator <code>EXP</code>. <img src="examples/muller/process1.png" class="img-responsive" alt=""> Interactions in predicting the dependent variable <code>BEH</code>. <img src="examples/muller/process2.png" class="img-responsive" alt=""> PROCESS gives the F-test, but we can see that it is equivalent to the (square of) z-test in jAMM, to the second significant digit.</p>
 <p>Then we look at the simple mediated effects and direct effects. Also here, we found a very close match. <img src="examples/muller/process3.png" class="img-responsive" alt=""></p>
