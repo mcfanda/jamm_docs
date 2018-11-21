@@ -1,5 +1,5 @@
 library(rmarkdown)
-msg<-"rosetta 2"
+msg<-"main docs"
 
 render_site("docssource/")
 system("git add .")
