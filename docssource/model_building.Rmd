@@ -107,11 +107,7 @@ One can combine the multiple IVs and the multiple mediators models to better sui
 
 <img src="models/m9.png" class="img-responsive" alt="">
 
-Obviously, one can then change the structure of the model, for instance by making the mediators a chain of mediators.
-
-<img src="models/m10.png" class="img-responsive" alt="">
-
-Or by removing some path from one IV to one mediator.
+Obviously, one can then change the structure of the model, for instance by making the mediators a chain of mediators, or by removing some path from one IV to one mediator.
 
 <img src="models/m11.png" class="img-responsive" alt="">
 
