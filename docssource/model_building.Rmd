@@ -86,7 +86,7 @@ While we do so, jAMM builds a parallel mediators model (the default), but we ign
 
 ## Multi-layer model
 
-Assume you have `x1` as independent, that influences `x2` and `x3`, that in turn effect `y` through `m1`. We can think of this model as a multi-layer model in terms of layers of mediators: first the `x2` and `x3` layer, then `m1` layer. To set it up, first we put all endogenous predictors in the mediators field and `x1` and `y` in the independent and dependent field, respectively.
+Assume you have `x1` as independent, that influences `x2` and `x3`, that in turn affect `y` through `m1`. We can think of this model as a multi-layer model in terms of layers of mediators: first the `x2` and `x3` layer, then `m1` layer. To set it up, first we put all endogenous predictors in the mediators field and `x1` and `y` in the independent and dependent field, respectively.
 
 <img src="models/m8_1.png" class="img-responsive" alt="">
 

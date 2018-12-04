@@ -373,7 +373,7 @@ div.tocify {
 </div>
 <div id="multi-layer-model" class="section level2">
 <h2>Multi-layer model</h2>
-<p>Assume you have <code>x1</code> as independent, that influences <code>x2</code> and <code>x3</code>, that in turn effect <code>y</code> through <code>m1</code>. We can think of this model as a multi-layer model in terms of layers of mediators: first the <code>x2</code> and <code>x3</code> layer, then <code>m1</code> layer. To set it up, first we put all endogenous predictors in the mediators field and <code>x1</code> and <code>y</code> in the independent and dependent field, respectively.</p>
+<p>Assume you have <code>x1</code> as independent, that influences <code>x2</code> and <code>x3</code>, that in turn affect <code>y</code> through <code>m1</code>. We can think of this model as a multi-layer model in terms of layers of mediators: first the <code>x2</code> and <code>x3</code> layer, then <code>m1</code> layer. To set it up, first we put all endogenous predictors in the mediators field and <code>x1</code> and <code>y</code> in the independent and dependent field, respectively.</p>
 <p><img src="models/m8_1.png" class="img-responsive" alt=""></p>
 <p>Again, we should change the automatically created parallel mediators model. We should add the paths from <code>x2</code> and <code>x3</code> to <code>m1</code>. To do so we go to <code>Mediators models</code> tab and add <code>x2</code> and <code>x3</code> in the field <em>Mediator=m1</em>.</p>
 <p><img src="models/m8.png" class="img-responsive" alt=""></p>
