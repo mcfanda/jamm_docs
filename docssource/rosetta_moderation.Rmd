@@ -93,7 +93,7 @@ mod1$coefficients[2]*mod2$coefficients[4]
 ```
 
 We can see that the estimates of the interactions  are identical to the ones obtained with jAMM
-(cf `Moderator effects` table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on `R lavaan package`, that uses the [expected information matrix](http://lavaan.ugent.be/tutorial/est.html) obtain the standard errors.
+(cf `Moderator effects` table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on `R lavaan package`, that uses the [expected information matrix](http://lavaan.ugent.be/tutorial/est.html) to obtain the standard errors.
 
 As regards the mediated effects, from the models we just estimated we can compute the average mediated effect, because the IV and the MO variables are centered to their means. We can use [R package mediation](https://cran.r-project.org/web/packages/mediation/mediation.pdf). Confidence intervals are computed with the bootstrap percentile method. Because we have a moderation, we should tell the `mediate()` command that we want the estimates of mediated effect for SVO equal to its mean. We do that with the `covariate` option.
 
@@ -102,10 +102,11 @@ library(mediation, quietly = T)
 nsim =1000 # number of bootstrap samples to draw
 modValue<-mean(data$SVO)
 med<-mediate(mod1,mod2,treat="cprime",mediator = "EXP",covariates=list("SVO"=modValue),sims = nsim,boot = TRUE ,boot.ci.type = "perc")
+summary(med)
 
 ```
 
-`mediation` package calls the indirect (mediated) effect "ACME" and the direct effect "ADE". We can compare the estimates with the jAMM table `Indirect and direct effects computed for SVO=mean`. We can see that the mediated effect is not exactly equal to the one estimated by jAMM. It is exctely twice as large. The reason is in the way `mediation` package treats the categorical variable. Nontheless, it is just a scaling issue, the remaing of the results are perfectly in line. 
+`mediation` package calls the indirect (mediated) effect "ACME" and the direct effect "ADE". We can compare the estimates with the jAMM table `Indirect and direct effects computed for SVO=mean`. We can see that the mediated effect is not exactly equal to the one estimated by jAMM. It is exctely twice as large. $4.5219/2=2.2609$. The reason is in the way `mediation` package treats the categorical variable. Nontheless, it is just a scaling issue, the remaing of the results are perfectly in line. 
 
 Then, we can test the mediated effect at different levels of the moderator SVO. 
 
