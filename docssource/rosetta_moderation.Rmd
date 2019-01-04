@@ -32,7 +32,7 @@ Here you can find comparisons of results obtained in jamovi jAMM, jamovi (jmv), 
 
 # Example
 
-This example shows how to estimate a conditional (moderated) mediation model with four variables in jAMM. Data come from [Muller, Judd, Yzerbyt, 2005](https://www.ncbi.nlm.nih.gov/pubmed/16393020) and contain variables related to a social dilemma experiment. The dataset can be downloaed [here](https://github.com/mcfanda/jamm_docs/blob/master/data/muller_mediation.sav)
+This example shows how to estimate a conditional (moderated) mediation model with four variables in jAMM. Data come from [Muller, Judd, Yzerbyt, 2005](https://www.ncbi.nlm.nih.gov/pubmed/16393020) and contain variables related to a social dilemma experiment. The dataset can be downloaed [here](https://github.com/mcfanda/jamm/blob/master/data/coopmedmod.csv)
 
 A long version of the analyses in jAMM is presented in `r link_pages(nickname="glm_moderation")`.
 
