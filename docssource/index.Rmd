@@ -33,17 +33,21 @@ version 0.0.4
 # Not implemented
 
 * Interactions among moderators of moderators (not really high priority)
-* Rigorous checks for wired and complex models 
+* Rigorous checks for weired and complex models 
 
 # Install
 
-Currently, jAMM can only being installed via R (or Rstudio and equivelant software). First, you need to install R developing tools from CRAN and jamovi developing tools.
+Pleae find jAMM in the jamovi library.
+
+# Install in R
+
+First, you need to install R developing tools from CRAN and jamovi core package.
 
 
 ```r
 install.packages("devtools",repos='http://cran.rstudio.com/')
 
-install.packages('jmvtools', repos=c('https://repo.jamovi.org', 'https://cran.r-project.org'))
+install.packages('jmvcore', repos=c('https://repo.jamovi.org', 'https://cran.r-project.org'))
 
 ```
 
@@ -53,15 +57,6 @@ Then you download jAMM module from this repository and install it
 devtools::install_github("mcfanda/jamm")
 pkg<-paste0(.libPaths()[[1]],"jamm")
 jmvtools::install(pkg=pkg)
-
-```
-
-If you are on linux and you are working with flatpak jamovi, you need to issue 
-  
-```r
-devtools::install_github("mcfanda/jamm")
-pkg<-paste0(.libPaths()[[1]],"jamm")
-jmvtools::install(pkg=pkg, home="flatpak")
 
 ```
 
