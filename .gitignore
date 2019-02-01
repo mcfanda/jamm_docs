@@ -12,6 +12,7 @@ temp/
 gamlj.jmo
 problems/
 future/
+docsource/others/
 
 # Example code in package build process
 *-Ex.R
