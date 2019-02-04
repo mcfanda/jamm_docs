@@ -1,0 +1,21 @@
+---
+title: "jAMM: simple mediation"
+author: "(Marcello Gallucci)"
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+```{r echo=FALSE,results='hide'}
+source("../R/functions.R")
+```
+
+
+
+# Introduction
+
+There is a newborn in the family of jamovi modules: jAMM, jamovi Advanced Mediation Models. 

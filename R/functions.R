@@ -86,3 +86,48 @@ issues<-function() {
 }
 
 test<-function() return("xx xxxxxx x")
+
+
+source("../R/constants.R")
+
+write_commits<-function() {
+  wd<-getwd()
+  setwd(TARGETD)
+  a<-system("git log --pretty=format:'%cd %s' --date=short",intern = T)
+  test<-grep("initialize",a,fixed=T)
+  if (length(test)==0)
+    return(FALSE)
+  coms<-a[1:(grep("initialize",a,fixed=T)-1)]
+  coms<-rev(unique(coms))
+  sel<-list()
+  j<-1
+  version="none"
+  versions<-character()
+  for (i in seq_along(coms)) {
+    test<-grep("!",coms[[i]],fixed=T)
+    if (length(test)>0) next()
+    test<-grep("Merge pull",coms[[i]],fixed=T)
+    if (length(test)>0) next()
+    test<-grep("#",coms[[i]],fixed=T)
+    if (length(test)>0) {
+      version<-strsplit(coms[[i]],"#",fixed = T)[[1]][2]
+      versions<-c(versions,version)
+      next()
+    }
+    sel[[j]]<-c(coms[[i]],version)
+    j<-j+1
+  }
+  sel<-rev(sel)
+  versions<-rev(versions)
+  coms<-do.call("rbind",sel)
+  for (i in seq_along(versions)) {
+    cat(paste("#",versions[i],"\n\n"))
+    cs<-coms[coms[,2]==versions[i],1]
+    for (j in cs)
+      cat(paste("*",j,"\n\n"))
+  }
+  
+  setwd(wd)
+  #coms
+}
+
