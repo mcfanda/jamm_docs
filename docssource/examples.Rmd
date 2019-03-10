@@ -1,0 +1,25 @@
+---
+title: "Examples"
+author: (Marcello Gallucci)
+output: 
+  html_document:
+    includes:
+      in_header: ganalytics.txt
+    toc: true
+    toc_float:
+      collapsed: false
+
+---
+
+
+```{r echo=FALSE,results='hide'}
+source("../R/functions.R")
+```
+
+
+Here you can find some application of jAMM module.
+
+# GLM mediation
+
+`r include_examples("glm")`
+
