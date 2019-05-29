@@ -3,7 +3,6 @@ library(rmarkdown)
 library(Rsearchable)
 library(gh)
 
-source("../R/constants.R")
 
 
 datafile<-function(name,file) {
@@ -148,7 +147,7 @@ write_commits<-function() {
 get_commits<-function() {
   
   query<-paste0("/repos/:owner/:repo/branches")
-  vers<-gh(query, owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+  vers<-gh(query, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   rvers<-rev(vers)
   vernames<-sapply(rvers,function(a) a$name)
   nvers<-1:(which(vernames==FIRST_VERSION)+1)
@@ -157,14 +156,14 @@ get_commits<-function() {
   vernames<-sapply(vers,function(a) a$name)
   r<-vers[[1]]
   query<-paste0("/repos/:owner/:repo/commits")
-  coms<-gh(query,sha=r$name, owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+  coms<-gh(query,sha=r$name, owner = MODULE_REPO_OWNER, repo =MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   date<-coms[[1]]$commit$author$date
   vers<-vers[2:length(vernames)]
   j<-1
   results<-list()
   for (r in vers) {
     query<-paste0("/repos/:owner/:repo/commits")
-    coms<-gh(query, sha=r$name, since=date,owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+    coms<-gh(query, sha=r$name, since=date,owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
     for (com in coms) {
       results[[j]]<-c(sha=com$sha,msg=com$commit$message,version=r$name)
       j<-j+1
