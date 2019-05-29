@@ -3,6 +3,7 @@ source("R/constants.R")
 source("R/functions.R")
 source("R/secrets.R")
 
+gh_whoami(.token=API_TOKEN)
 get_commits()
 write_commits2()
 
