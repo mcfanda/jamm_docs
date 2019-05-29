@@ -1,8 +1,16 @@
 library(yaml)
 library(rmarkdown)
 library(Rsearchable)
+library(gh)
+
+source("../R/constants.R")
 
 
+datafile<-function(name,file) {
+  if (length(grep(":/",file,fixed = T))==0)
+    file<-paste0(DATALINK,"/",file)
+  paste0('[',name,'](',file,')')
+}
 
 keywords<-function(key) {
   span<-'<span class="keywords"> <span class="keytitle"> keywords </span>'
@@ -10,11 +18,14 @@ keywords<-function(key) {
 }
 
 version<-function(ver) {
-    paste('<span class="version"> <span class="versiontitle"> jAMM version ≥ </span> ',ver,' </span>')
+    paste('<span class="version"> <span class="versiontitle"> GALMj version ≥ </span> ',ver,' </span>')
 }
 
-
 draft<-'<span class="draft"> Draft version, mistakes may be around </span>'
+
+incomplete<-'<span class="incomplete"> Work in progress: incomplete version </span>'
+
+pic<-function(name) paste('<img src="',name,'" class="img-responsive" alt="">')
 
 
 get_files<-function() {
@@ -44,8 +55,6 @@ get_pages<-function(nickname=NULL,topic=NULL,category=NULL) {
   res<-lookup(sfiles,criteria)
   res
 }
-
-
 
 link_pages<-function(nickname=NULL,topic=NULL,category=NULL) {
   
@@ -78,8 +87,8 @@ include_examples<-function(topic)  {
 issues<-function() {
   a<-'<h1>Comments?</h1>\n'
   a<-paste(a,'<p>Got comments, issues or spotted a bug? Please open an issue on
-      <a href=" https://github.com/mcfanda/jamm/issues ">
-      jAMM at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a></p>
+      <a href=" https://github.com/mcfanda/gamlj/issues ">
+      GAMLj at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a></p>
   ')
   return(a)
   
@@ -88,15 +97,14 @@ issues<-function() {
 test<-function() return("xx xxxxxx x")
 
 
-source("../R/constants.R")
-
 write_commits<-function() {
   wd<-getwd()
-  setwd(TARGETD)
-  a<-system("git log --pretty=format:'%cd %s' --date=short",intern = T)
+  setwd(MODULE_FOLDER)
+### With dates ...  a<-system("git log --pretty=format:'%cd %s' --date=short",intern = T)
+  a<-system("git log --pretty=format:'%s' --date=short",intern = T)
   test<-grep("initialize",a,fixed=T)
   if (length(test)==0)
-    return(FALSE)
+      return(FALSE)
   coms<-a[1:(grep("initialize",a,fixed=T)-1)]
   coms<-rev(unique(coms))
   sel<-list()
@@ -106,8 +114,11 @@ write_commits<-function() {
   for (i in seq_along(coms)) {
     test<-grep("!",coms[[i]],fixed=T)
     if (length(test)>0) next()
-    test<-grep("Merge pull",coms[[i]],fixed=T)
+    test<-grep("Merge",coms[[i]],fixed=T)
     if (length(test)>0) next()
+    test<-grep("§",coms[[i]],fixed=T)
+    if (length(test)>0) coms[[i]]<-paste("<b>",coms[[i]],"</b>")
+    
     test<-grep("#",coms[[i]],fixed=T)
     if (length(test)>0) {
       version<-strsplit(coms[[i]],"#",fixed = T)[[1]][2]
@@ -121,13 +132,124 @@ write_commits<-function() {
   versions<-rev(versions)
   coms<-do.call("rbind",sel)
   for (i in seq_along(versions)) {
-    cat(paste("#",versions[i],"\n\n"))
+    rel<-""
+    if (i==1) rel<-"(future)"
+    if (i==2) rel<-"(current)"
+    
+    cat(paste("#",versions[i],rel,"\n\n"))
     cs<-coms[coms[,2]==versions[i],1]
     for (j in cs)
       cat(paste("*",j,"\n\n"))
   }
-  
   setwd(wd)
   #coms
 }
 
+get_commits<-function() {
+  
+  query<-paste0("/repos/:owner/:repo/branches")
+  vers<-gh(query, owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+  rvers<-rev(vers)
+  vernames<-sapply(rvers,function(a) a$name)
+  nvers<-1:(which(vernames==FIRST_VERSION)+1)
+  rvers<-rvers[nvers]
+  vers<-rev(rvers)
+  vernames<-sapply(vers,function(a) a$name)
+  r<-vers[[1]]
+  query<-paste0("/repos/:owner/:repo/commits")
+  coms<-gh(query,sha=r$name, owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+  date<-coms[[1]]$commit$author$date
+  vers<-vers[2:length(vernames)]
+  j<-1
+  results<-list()
+  for (r in vers) {
+    query<-paste0("/repos/:owner/:repo/commits")
+    coms<-gh(query, sha=r$name, since=date,owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+    for (com in coms) {
+      results[[j]]<-c(sha=com$sha,msg=com$commit$message,version=r$name)
+      j<-j+1
+    }
+    date<-coms[[1]]$commit$author$date
+  }
+  data<-data.frame(do.call("rbind",results),stringsAsFactors = FALSE)
+  data<-data[!duplicated(data$sha),]
+  data<-data[!duplicated(data$msg),]
+  
+}
+
+
+write_commits2_old<-function() {
+  commits<-get_commits()
+  sel<-list()
+  j<-1
+  for (i in 1:dim(commits)[1]) {
+    msg<-commits[i,"msg"]
+    test<-grep("#",msg,fixed=T)
+    if (length(test)>0) next()
+    test<-grep("!",msg,fixed=T)
+    if (length(test)>0) next()
+    test<-grep("Merge",msg,fixed=T)
+    if (length(test)>0) next()
+    test<-grep("§",msg,fixed=T)
+    if (length(test)>0) msg<-paste("<b>",msg,"</b>")
+    test<-grep("#",msg,fixed=T)
+    if (length(test)>0) {
+      next()
+    }
+    sel[[j]]<-c(msg,commits[i,"version"])
+    j<-j+1
+  }
+  sel<-rev(sel)
+  versions<-rev(unique(commits$version))
+  coms<-do.call("rbind",sel)
+  for (i in seq_along(versions)) {
+    rel<-""
+    if (i==1) rel<-"(future)"
+    if (i==2) rel<-"(current)"
+    
+    cat(paste("#",versions[i],rel,"\n\n"))
+    cs<-coms[coms[,2]==versions[i],1]
+    for (j in cs)
+      cat(paste("*",j,"\n\n"))
+  }
+  #coms
+}
+
+write_commits2<-function() {
+  commits<-get_commits()
+  sel<-list()
+  j<-1
+  for (i in 1:dim(commits)[1]) {
+    msg<-trimws(commits[i,"msg"])
+    gonext=FALSE
+    for (rule in BANNED_COMMITS) {
+      if (msg==rule)
+        gonext=TRUE
+    }
+    for (rule in BANNED_COMMITS_GREP) {
+      if (length(grep(rule,msg)))
+           gonext=TRUE
+    }
+    
+    if (gonext)
+      next()
+    test<-grep("§",msg,fixed=T)
+    if (length(test)>0) msg<-paste("<b>",msg,"</b>")
+    sel[[j]]<-c(msg,commits[i,"version"])
+    j<-j+1
+  }
+  sel<-rev(sel)
+  versions<-rev(unique(commits$version))
+  coms<-do.call("rbind",sel)
+  for (i in seq_along(versions)) {
+    rel<-""
+    if (i==1) rel<-"(future)"
+    if (i==2) rel<-"(current)"
+    
+    cat(paste("#",versions[i],rel,"\n\n"))
+    cs<-coms[coms[,2]==versions[i],1]
+    for (j in cs)
+      cat(paste("*",j,"\n\n"))
+  }
+  #coms
+}
