@@ -10,12 +10,12 @@ output:
 
 ```{r ciao, echo=FALSE,results='hide'}
 source("../R/functions.R")
-
+""
 ```
 
-# jAMM: A Suite for Mediation Models
+jAMM: A Suite for Mediation Models
 
-jamovi Advanced Mediation Models 
+<img src="pics/logosm.png" class="img-responsive" alt="commons/pics/ui.png">
 
 
 # State of the art
