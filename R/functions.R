@@ -153,6 +153,8 @@ get_commits<-function() {
   nvers<-1:(which(vernames==FIRST_VERSION)+1)
   rvers<-rvers[nvers]
   vers<-rev(rvers)
+  non_null_names <- which(!sapply(vers, is.null))
+  vers<-vers[non_null_names]
   vernames<-sapply(vers,function(a) a$name)
   r<-vers[[1]]
   query<-paste0("/repos/:owner/:repo/commits")
@@ -164,16 +166,19 @@ get_commits<-function() {
   for (r in vers) {
     query<-paste0("/repos/:owner/:repo/commits")
     coms<-gh(query, sha=r$name, since=date,owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
+    if (length(coms)==1 && length(coms[[1]])==1)
+       next()
+    
     for (com in coms) {
       results[[j]]<-c(sha=com$sha,msg=com$commit$message,version=r$name)
       j<-j+1
-    }
-    date<-coms[[1]]$commit$author$date
+      }
+     date<-coms[[1]]$commit$author$date
   }
   data<-data.frame(do.call("rbind",results),stringsAsFactors = FALSE)
   data<-data[!duplicated(data$sha),]
   data<-data[!duplicated(data$msg),]
-  
+  data
 }
 
 
@@ -216,6 +221,8 @@ write_commits2_old<-function() {
 
 write_commits2<-function() {
   commits<-get_commits()
+  if (dim(commits)[1]==0)
+     return()
   sel<-list()
   j<-1
   for (i in 1:dim(commits)[1]) {

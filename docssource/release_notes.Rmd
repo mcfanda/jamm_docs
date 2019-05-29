@@ -13,6 +13,7 @@ output:
 
 ```{r echo=FALSE,results='hide'}
 source("../R/secrets.R")
+source("../R/constants.R")
 source("../R/functions.R")
 
 ```
