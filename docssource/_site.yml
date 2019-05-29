@@ -16,7 +16,7 @@ navbar:
 
   right: 
   - text: "View on Github"
-    href: https://github.com/mcfanda/jamm
+    href: https://github.com/jamovi-amm/jamm
 output:
   html_document:
     css: style.css
