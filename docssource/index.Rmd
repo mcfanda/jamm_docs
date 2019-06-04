@@ -18,16 +18,19 @@ jAMM: A Suite for Mediation Models
 <img src="pics/logosm.png" class="img-responsive" alt="commons/pics/ui.png">
 
 
-# State of the art
+# Features
 
-* It makes the path model
-* It shows interactions in the path models
-* It makes checks for coherence of the model
-* It makes suggestions toward more coherent models
+* Path model graph
+* Simple Mediation models
+* Multiple mediators models
+* Multiple independent variable models
+* Conditional mediation (moderated mediation)
+* Simple mediational effects (estimated at different levels of moderators)
+* Bootstrap confidence intervals
+* Checks for coherence of the model
+* Suggestions toward more coherent models
 * Automatically guesses which mediation model is more likely to be needed
 * Custom models from UI
-* It estimates the model coefficients
-* Simple mediational effects (estimated at different levels of moderators)
  
 
 # Not implemented
