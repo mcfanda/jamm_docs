@@ -40,7 +40,7 @@ jAMM: A Suite for Mediation Models
 
 # Install
 
-Pleae find jAMM in the jamovi library.
+Please find jAMM in the jamovi library.
 
 # Install in R
 
