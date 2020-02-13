@@ -27,7 +27,7 @@ cw<-write_commits2()
 
 
 
-#  version 1.0.1 (jamovi library)
+#  version 1.0.1 
 
 * move to medmod menu                           
 * fix moderators interaction issue          
@@ -40,18 +40,18 @@ cw<-write_commits2()
 * IE components shown by default"                
 
 
-#  version 1.0.0 (jamovi library)
+#  version 1.0.0 
 
 * fix error on no CI
 * Fix several small bugs
 * added components in tables
 * fixed interaction with catecorical variables
 
-#  version 0.9.0 (jamovi library)
+#  version 0.9.0 
 
 *  First working version
 
-#  version 0.0.3 (future in jamovi library)
+#  version 0.0.3 
 
 * First public release 
 

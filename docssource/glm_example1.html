@@ -12,7 +12,7 @@
 <meta name="author" content="(Marcello Gallucci)" />
 
 
-<title>jAMM: Model estimates</title>
+<title>jAMM: simple mediation</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -393,38 +393,58 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">jAMM: Model estimates</h1>
+<h1 class="title toc-ignore">jAMM: simple mediation</h1>
 <h4 class="author">(Marcello Gallucci)</h4>
 
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test </span></p>
-<p>All the coefficients in the <code>Mediation</code> tables are estimated using Maximum Likelihood method implemented in <a href="http://www.jstatsoft.org/v48/i02/">lavaan R package</a>. The betas are obtained as standardized parameters of the path model. They are often called <em>completely standardized effect size indexes</em> . For the indirect effect, the beta is also called <em>index of mediation</em> (<a href="http://quantpsy.org/pubs/preacher_kelley_2011.pdf">Preacher &amp; Kelley, 2011</a>).</p>
-<p>If <code>Individual regression</code> option is selected, the output shows the individual regressions necessary to estimate the mediation model. They show the OLS regression coefficients, usually employed in regression analysis (<a href="http://webcom.upmf-grenoble.fr/LIP/Perso/DMuller/GSERM/Articles/Journal%20of%20Personality%20and%20Social%20Psychology%201986%20Baron.pdf">Baron &amp; Kenny, 1986</a>)</p>
-<p>Due to the different methods of estimation, the estimates obtained in the <code>Mediation</code> tables and in the <code>Individual regressions</code> tables may slightly vary, although they never differ in a substantial way. The maximum likelihood estimates are more than fine (<a href="https://www.sciencedirect.com/science/article/pii/S2451865417300285">Rijnhart, Twisk, Chinapaw, de Boer, Heymans, 2017</a>) The purpose of the individual regressions tables is to allow exact comparison with results obtained in R (or other software) using the Baron and Kenny approach.</p>
-<div id="list-of-docs" class="section level1">
-<h1>List of docs</h1>
-<ul>
-<li>
-<a href="estimation.html">jAMM: Model estimates</a>
-</li>
-<li>
-<a href="glm.html">GLM mediation models</a>
-</li>
-<li>
-<a href="model_building.html">jAMM: Model building</a>
-</li>
-<li>
-<a href="moderator_building.html">jAMM: Building conditional models</a>
-</li>
-<li>
-<a href="rosetta.html">Rosetta store: results across software</a>
-</li>
-</ul>
+<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, simple mediation </span></p>
+<p>This example shows how to estimate a simple mediation model with three variables in jAMM. Data come from <a href="&#39;http://static.lib.virginia.edu/statlab/materials/data/mediationData.csv&#39;">University of Virginia Research Data Service</a> and contain variables related to school achievement in a sample of students. There are three variables, school <code>grades</code>, <code>self-esteem</code>, and <code>happiness</code>, measured on quantitative scales (I renamed the variables to make the data more intuitive, with <code>X=grades</code>, <code>M=selfesteem</code> and <code>Y=happiness</code>. We also defined the variables as continuous in the data tab). The mediation model, explained <a href="https://data.library.virginia.edu/introduction-to-mediation-analysis/">here</a>, is a classical simple mediation, as shown in the Figure.</p>
+<p><img src="pics/virginia_original_model.png" class="img-responsive" alt=""></p>
+<div id="jamm" class="section level1">
+<h1>jAMM</h1>
+<p>First, we launch the module under <code>linear models</code> menu. You can see in the results panel (right) that a simple mediation model path diagram is ready to be filled by selecting variables (left).</p>
+<p><img src="examples/virginia_simple/overall.png" class="img-responsive" alt=""></p>
 </div>
-<div id="examples" class="section level1">
-<h1>Examples</h1>
+<div id="input" class="section level1">
+<h1>Input</h1>
+<p>In case of simple mediation, we simply need to define the role of the variables. So, we put <code>happiness</code> in the <code>Dependent Variable</code> field, <code>selfesteem</code> in the <code>Mediators</code> field, and <code>grades</code> in the <code>Covariates</code> (continuous independent variables) field.</p>
+<p>When you define the variables role, the module understands the mediation model and updates the path diagram.</p>
+<p><img src="examples/virginia_simple/pathdiagram.png" class="img-responsive" alt=""></p>
+</div>
+<div id="the-model" class="section level1">
+<h1>The model</h1>
+<p>In case of simple mediation, the module understands the intended statistical model, that can be checked in the <code>Mediators models</code> and <code>Full model</code> tabs.</p>
+<p><img src="examples/virginia_simple/medmodel.png" class="img-responsive" alt=""></p>
+<p><img src="examples/virginia_simple/fullmodel.png" class="img-responsive" alt=""></p>
+<p>The tabs simply indicate that the mediation model is composed by a linear regression with <code>selfesteem</code> as dependent and <code>grades</code> as independent, and one regression with <code>happiness</code> as dependent and <code>selfesteem</code> and <code>grades</code> as independent variables. These two models are also reported in the <code>Model info</code> result table.</p>
+<p><img src="examples/virginia_simple/modelinfo.png" class="img-responsive" alt=""></p>
+<p>In the <code>Model info</code> table you can also see how the module deduced what is the mediated effect to be computed, in our example <code>grades -&gt; selfesteem -&gt; happiness</code>.</p>
+<p>In the mediation literature notation, these models are usually referred to as:</p>
+<p><span class="math display">\[ M =k_1 + a \cdot X \]</span></p>
+<p><span class="math display">\[ Y =k_2+ b \cdot M +  c^\prime \cdot X\]</span> (<span class="math inline">\(k_i\)</span> are intercepts)</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p>Results report indirect (mediated), direct (unmediated) and total effects, under the <code>Mediation</code> section, in the <code>Indirect and direct effects</code>.</p>
+<p><img src="examples/virginia_simple/results1.png" class="img-responsive" alt=""></p>
+<p>The <code>Indirect</code> row reports the <em>mediated effect</em>. Thus, this is the classical <span class="math inline">\(a \cdot b\)</span> mediation effect, where <span class="math inline">\(a\)</span> is the coefficient from <code>grades</code> to <code>selfesteem</code> and <span class="math inline">\(b\)</span> is the coefficient from <code>selfesteem</code> to <code>happiness</code>, keeping constant <code>grades</code>. Coefficients <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the components of the mediated effect, and you can see them in the table in the <code>Component</code> rows. As expected, <span class="math inline">\(a \cdot b= .5610 \cdot .6355 = .3565\)</span>.</p>
+<p>The <code>z</code> test associated with the mediated effect is the <em>large sample</em> z test of the mediated effect, which is a slightly more accurate version of the Sobel test. The confidence intervals are also computed using <em>large sample</em> approximation, but the bootstrap version of confidence intervals can be asked in the <code>Mediation options</code> tab (see below).</p>
+<p>The <code>Direct</code> row shows the effect of the independent variable not mediated by <code>EXP</code>, again for the average level of <code>SVO</code>, the coefficient usually denoted by <span class="math inline">\(c^\prime\)</span> in the mediation jargon. The <code>Total</code> effect is the overall effect of <code>PRIME</code> on <code>BEH</code>, for the average level of <code>SVO</code>, that is <span class="math inline">\(c=a \cdot b + c^\prime\)</span>. All the <code>z</code> tests associated with these coefficients test the null-hypothesis that the corresponding coefficient is zero. Confidence intervals are computed with the same method used for the indirect effect.</p>
+<p>Finally, the <span class="math inline">\(\beta\)</span> column shows the standardized solution coefficients.</p>
+</div>
+<div id="confidence-intervals" class="section level1">
+<h1>Confidence intervals</h1>
+<p>By default, the jAMM computes the confidence intervals using the <em>large sample</em> delta method, that is using the z test as the starting point of computation. However, often users prefer to use a bootstrap method. That can be done in the <code>Mediation options</code> tab.</p>
+<p><img src="examples/virginia_simple/options.png" class="img-responsive" alt=""></p>
+<p>Several bootstrap methods can be selected. One of the most used in mediation analysis is the <em>precentile</em> method, which is jAMM is called <code>bootstrap (Percent)</code>. See <a href="glm.html">GLM mediation models</a> for help on the other options. Please note that the bootstrap method can be very time-consuming and slow.</p>
+<p><img src="examples/virginia_simple/results2.png" class="img-responsive" alt=""></p>
+<p>To recap, to estimate a simple mediation model, simply select the dependent, the independent, and the mediator variable, and the results will be shown in the results table.</p>
+<p>If you are interested in checking the convergence of jAMM results with other software results, please visit the rosetta store <a href="rosetta_moderation.html">Rosetta store: conditional mediation</a></p>
+</div>
+<div id="other-examples" class="section level1">
+<h1>Other examples</h1>
 <ul>
 <li>
 <a href="glm_example1.html">jAMM: simple mediation</a>

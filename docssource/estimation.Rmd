@@ -20,6 +20,15 @@ source("../R/functions.R")
 
 `r keywords("Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test")`
 
+All the coefficients in the `Mediation` tables are estimated using Maximum Likelihood method implemented
+in [lavaan R package](http://www.jstatsoft.org/v48/i02/). The betas are obtained as standardized parameters of the path model. They are often called _completely standardized effect size indexes_ . For the indirect effect, the beta is also called _index of mediation_ ([Preacher & Kelley, 2011](http://quantpsy.org/pubs/preacher_kelley_2011.pdf)).
+
+If `Individual regression` option is selected, the output shows the individual regressions necessary to estimate the mediation model. They show the OLS regression coefficients, usually employed in regression analysis ([Baron & Kenny, 1986](http://webcom.upmf-grenoble.fr/LIP/Perso/DMuller/GSERM/Articles/Journal%20of%20Personality%20and%20Social%20Psychology%201986%20Baron.pdf))
+
+Due to the different methods of estimation, the estimates obtained in the `Mediation` tables and in the `Individual regressions` tables may slightly vary, although they never differ in a substantial way. The maximum likelihood estimates are more than fine ([Rijnhart, Twisk, Chinapaw, de Boer, Heymans, 2017
+](https://www.sciencedirect.com/science/article/pii/S2451865417300285)) The purpose of the individual regressions tables is to allow exact comparison with results obtained in R (or other software) using the Baron and Kenny approach.
+
+
 
 
 # List of docs

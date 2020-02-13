@@ -12,7 +12,7 @@
 <meta name="author" content="(Marcello Gallucci)" />
 
 
-<title>jAMM: Model estimates</title>
+<title>jAMM: Building conditional models</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -393,16 +393,13 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">jAMM: Model estimates</h1>
+<h1 class="title toc-ignore">jAMM: Building conditional models</h1>
 <h4 class="author">(Marcello Gallucci)</h4>
 
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test </span></p>
-<p>All the coefficients in the <code>Mediation</code> tables are estimated using Maximum Likelihood method implemented in <a href="http://www.jstatsoft.org/v48/i02/">lavaan R package</a>. The betas are obtained as standardized parameters of the path model. They are often called <em>completely standardized effect size indexes</em> . For the indirect effect, the beta is also called <em>index of mediation</em> (<a href="http://quantpsy.org/pubs/preacher_kelley_2011.pdf">Preacher &amp; Kelley, 2011</a>).</p>
-<p>If <code>Individual regression</code> option is selected, the output shows the individual regressions necessary to estimate the mediation model. They show the OLS regression coefficients, usually employed in regression analysis (<a href="http://webcom.upmf-grenoble.fr/LIP/Perso/DMuller/GSERM/Articles/Journal%20of%20Personality%20and%20Social%20Psychology%201986%20Baron.pdf">Baron &amp; Kenny, 1986</a>)</p>
-<p>Due to the different methods of estimation, the estimates obtained in the <code>Mediation</code> tables and in the <code>Individual regressions</code> tables may slightly vary, although they never differ in a substantial way. The maximum likelihood estimates are more than fine (<a href="https://www.sciencedirect.com/science/article/pii/S2451865417300285">Rijnhart, Twisk, Chinapaw, de Boer, Heymans, 2017</a>) The purpose of the individual regressions tables is to allow exact comparison with results obtained in R (or other software) using the Baron and Kenny approach.</p>
+<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, simple mediation, path diagram </span></p>
 <div id="list-of-docs" class="section level1">
 <h1>List of docs</h1>
 <ul>

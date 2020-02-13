@@ -12,7 +12,7 @@
 <meta name="author" content="(Marcello Gallucci)" />
 
 
-<title>jAMM: Model estimates</title>
+<title>Examples</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -393,38 +393,15 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">jAMM: Model estimates</h1>
+<h1 class="title toc-ignore">Examples</h1>
 <h4 class="author">(Marcello Gallucci)</h4>
 
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test </span></p>
-<p>All the coefficients in the <code>Mediation</code> tables are estimated using Maximum Likelihood method implemented in <a href="http://www.jstatsoft.org/v48/i02/">lavaan R package</a>. The betas are obtained as standardized parameters of the path model. They are often called <em>completely standardized effect size indexes</em> . For the indirect effect, the beta is also called <em>index of mediation</em> (<a href="http://quantpsy.org/pubs/preacher_kelley_2011.pdf">Preacher &amp; Kelley, 2011</a>).</p>
-<p>If <code>Individual regression</code> option is selected, the output shows the individual regressions necessary to estimate the mediation model. They show the OLS regression coefficients, usually employed in regression analysis (<a href="http://webcom.upmf-grenoble.fr/LIP/Perso/DMuller/GSERM/Articles/Journal%20of%20Personality%20and%20Social%20Psychology%201986%20Baron.pdf">Baron &amp; Kenny, 1986</a>)</p>
-<p>Due to the different methods of estimation, the estimates obtained in the <code>Mediation</code> tables and in the <code>Individual regressions</code> tables may slightly vary, although they never differ in a substantial way. The maximum likelihood estimates are more than fine (<a href="https://www.sciencedirect.com/science/article/pii/S2451865417300285">Rijnhart, Twisk, Chinapaw, de Boer, Heymans, 2017</a>) The purpose of the individual regressions tables is to allow exact comparison with results obtained in R (or other software) using the Baron and Kenny approach.</p>
-<div id="list-of-docs" class="section level1">
-<h1>List of docs</h1>
-<ul>
-<li>
-<a href="estimation.html">jAMM: Model estimates</a>
-</li>
-<li>
-<a href="glm.html">GLM mediation models</a>
-</li>
-<li>
-<a href="model_building.html">jAMM: Model building</a>
-</li>
-<li>
-<a href="moderator_building.html">jAMM: Building conditional models</a>
-</li>
-<li>
-<a href="rosetta.html">Rosetta store: results across software</a>
-</li>
-</ul>
-</div>
-<div id="examples" class="section level1">
-<h1>Examples</h1>
+<p>Here you can find some application of jAMM module.</p>
+<div id="glm-mediation" class="section level1">
+<h1>GLM mediation</h1>
 <ul>
 <li>
 <a href="glm_example1.html">jAMM: simple mediation</a>
@@ -433,12 +410,6 @@ div.tocify {
 <a href="glm_example2.html">jAMM: conditional mediation</a>
 </li>
 </ul>
-<h1>
-Comments?
-</h1>
-<p>
-Got comments, issues or spotted a bug? Please open an issue on <a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
-</p>
 </div>
 
 

@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="(Marcello Gallucci)" />
 
 
-<title>jAMM: Model estimates</title>
+<title>About</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,21 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129366054-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-129366054-1');
-</script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -262,75 +249,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
-
-</style>
-
-
 
 </head>
 
@@ -338,16 +256,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -393,58 +301,15 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">jAMM: Model estimates</h1>
-<h4 class="author">(Marcello Gallucci)</h4>
+<h1 class="title toc-ignore">About</h1>
 
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test </span></p>
-<p>All the coefficients in the <code>Mediation</code> tables are estimated using Maximum Likelihood method implemented in <a href="http://www.jstatsoft.org/v48/i02/">lavaan R package</a>. The betas are obtained as standardized parameters of the path model. They are often called <em>completely standardized effect size indexes</em> . For the indirect effect, the beta is also called <em>index of mediation</em> (<a href="http://quantpsy.org/pubs/preacher_kelley_2011.pdf">Preacher &amp; Kelley, 2011</a>).</p>
-<p>If <code>Individual regression</code> option is selected, the output shows the individual regressions necessary to estimate the mediation model. They show the OLS regression coefficients, usually employed in regression analysis (<a href="http://webcom.upmf-grenoble.fr/LIP/Perso/DMuller/GSERM/Articles/Journal%20of%20Personality%20and%20Social%20Psychology%201986%20Baron.pdf">Baron &amp; Kenny, 1986</a>)</p>
-<p>Due to the different methods of estimation, the estimates obtained in the <code>Mediation</code> tables and in the <code>Individual regressions</code> tables may slightly vary, although they never differ in a substantial way. The maximum likelihood estimates are more than fine (<a href="https://www.sciencedirect.com/science/article/pii/S2451865417300285">Rijnhart, Twisk, Chinapaw, de Boer, Heymans, 2017</a>) The purpose of the individual regressions tables is to allow exact comparison with results obtained in R (or other software) using the Baron and Kenny approach.</p>
-<div id="list-of-docs" class="section level1">
-<h1>List of docs</h1>
-<ul>
-<li>
-<a href="estimation.html">jAMM: Model estimates</a>
-</li>
-<li>
-<a href="glm.html">GLM mediation models</a>
-</li>
-<li>
-<a href="model_building.html">jAMM: Model building</a>
-</li>
-<li>
-<a href="moderator_building.html">jAMM: Building conditional models</a>
-</li>
-<li>
-<a href="rosetta.html">Rosetta store: results across software</a>
-</li>
-</ul>
-</div>
-<div id="examples" class="section level1">
-<h1>Examples</h1>
-<ul>
-<li>
-<a href="glm_example1.html">jAMM: simple mediation</a>
-</li>
-<li>
-<a href="glm_example2.html">jAMM: conditional mediation</a>
-</li>
-</ul>
-<h1>
-Comments?
-</h1>
-<p>
-Got comments, issues or spotted a bug? Please open an issue on <a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
-</p>
-</div>
+<p>GALMj is awesome.</p>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -477,32 +342,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

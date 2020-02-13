@@ -148,17 +148,21 @@ get_commits<-function() {
   
   query<-paste0("/repos/:owner/:repo/branches")
   vers<-gh(query, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
+  vernames<-sapply(vers,function(a) a$name)
+  print(vers)
+  print(versnames)
+  ord<-order(vernames)
+  vernames<-vernames[ord]
+  vers<-vers[ord]
+  vernames<-rev(vernames)
   rvers<-rev(vers)
-  vernames<-sapply(rvers,function(a) a$name)
   nvers<-1:(which(vernames==FIRST_VERSION)+1)
   rvers<-rvers[nvers]
   vers<-rev(rvers)
-  non_null_names <- which(!sapply(vers, is.null))
-  vers<-vers[non_null_names]
   vernames<-sapply(vers,function(a) a$name)
   r<-vers[[1]]
   query<-paste0("/repos/:owner/:repo/commits")
-  coms<-gh(query,sha=r$name, owner = MODULE_REPO_OWNER, repo =MODULE_REPO,.limit=Inf,.token=API_TOKEN)
+  coms<-gh(query,sha=r$name, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   date<-coms[[1]]$commit$author$date
   vers<-vers[2:length(vernames)]
   j<-1
@@ -166,19 +170,18 @@ get_commits<-function() {
   for (r in vers) {
     query<-paste0("/repos/:owner/:repo/commits")
     coms<-gh(query, sha=r$name, since=date,owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
-    if (length(coms)==1 && length(coms[[1]])==1)
-       next()
-    
     for (com in coms) {
+      if ("sha" %in% names(com)) {
       results[[j]]<-c(sha=com$sha,msg=com$commit$message,version=r$name)
       j<-j+1
       }
-     date<-coms[[1]]$commit$author$date
+    }
+    date<-coms[[1]]$commit$author$date
   }
   data<-data.frame(do.call("rbind",results),stringsAsFactors = FALSE)
   data<-data[!duplicated(data$sha),]
   data<-data[!duplicated(data$msg),]
-  data
+  
 }
 
 

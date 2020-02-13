@@ -12,7 +12,7 @@
 <meta name="author" content="(Marcello Gallucci)" />
 
 
-<title>jAMM: Model estimates</title>
+<title>jAMM: Model building</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -393,16 +393,88 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">jAMM: Model estimates</h1>
+<h1 class="title toc-ignore">jAMM: Model building</h1>
 <h4 class="author">(Marcello Gallucci)</h4>
 
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> Mediation, mediated moderation, moderated mediation, conditional mediation, bootstrap, Sobel test </span></p>
-<p>All the coefficients in the <code>Mediation</code> tables are estimated using Maximum Likelihood method implemented in <a href="http://www.jstatsoft.org/v48/i02/">lavaan R package</a>. The betas are obtained as standardized parameters of the path model. They are often called <em>completely standardized effect size indexes</em> . For the indirect effect, the beta is also called <em>index of mediation</em> (<a href="http://quantpsy.org/pubs/preacher_kelley_2011.pdf">Preacher &amp; Kelley, 2011</a>).</p>
-<p>If <code>Individual regression</code> option is selected, the output shows the individual regressions necessary to estimate the mediation model. They show the OLS regression coefficients, usually employed in regression analysis (<a href="http://webcom.upmf-grenoble.fr/LIP/Perso/DMuller/GSERM/Articles/Journal%20of%20Personality%20and%20Social%20Psychology%201986%20Baron.pdf">Baron &amp; Kenny, 1986</a>)</p>
-<p>Due to the different methods of estimation, the estimates obtained in the <code>Mediation</code> tables and in the <code>Individual regressions</code> tables may slightly vary, although they never differ in a substantial way. The maximum likelihood estimates are more than fine (<a href="https://www.sciencedirect.com/science/article/pii/S2451865417300285">Rijnhart, Twisk, Chinapaw, de Boer, Heymans, 2017</a>) The purpose of the individual regressions tables is to allow exact comparison with results obtained in R (or other software) using the Baron and Kenny approach.</p>
+<p><span class="keywords"> <span class="keytitle"> keywords </span> Path Diagram, Mediation, mediated moderation, moderated mediation, conditional mediation </span></p>
+<p>In this page we show how to set up some mediation models without interactions. For models with interactions (conditional mediation, moderated mediation, etc) see <a href="moderator_building.html">jAMM: Building conditional models</a>.</p>
+<div id="simple-mediation" class="section level1">
+<h1>Simple mediation</h1>
+<p>To set up a simple mediation model, simply define one dependent variable, one independent variable and one mediator.</p>
+<p><img src="models/m1.png" class="img-responsive" alt=""></p>
+<p>jAMM will define the models for you, as shown in the model info table.</p>
+<p><img src="models/m1_2.png" class="img-responsive" alt=""></p>
+</div>
+<div id="categorical-independent-variables" class="section level1">
+<h1>Categorical independent variables</h1>
+<p>The same logic applies for categorical independent variables.</p>
+<p><img src="models/m2.png" class="img-responsive" alt=""></p>
+<p>However, for categorical independent variables, the path diagram shows only one box for the IV, even though the estimation requires dummies (contrast variables) to estimate the effects. This is signaled in the notes.</p>
+<p><img src="models/m2_2.png" class="img-responsive" alt=""></p>
+<p>Thus, since <code>fact1</code> variable has 4 groups, in the results we will find three mediated effects, one for the contrast variable <code>fact11</code>, one for <code>fact12</code>, and one for <code>fact11</code>.</p>
+<p><img src="models/m2_3.png" class="img-responsive" alt=""></p>
+</div>
+<div id="multiple-independent-variables" class="section level1">
+<h1>Multiple independent variables</h1>
+<p>You can add as many independent variables as you need, the model is updated, by default, accordingly with the simple rule that each IV is mediatated by the mediator.</p>
+<p><img src="models/m3.png" class="img-responsive" alt=""></p>
+<p>Nonetheless, one may have in mind a different model (not necessarily sensible in all applications). Assume we want the mediated effects of <code>x1</code> and <code>x2</code> through <code>m1</code>, but we want the effects on <code>y</code> (and only them) to be computed after partializing <code>x3</code>. First, we go to <code>Mediators models</code> and remove the effect of <code>x3</code> from the list of predictors. In doing so, the jAMM removes <code>x3</code> also from the <code>Full model</code>. We go there and re-include <code>x3</code> in the list of predictors. So we obtain the model we had in mind.</p>
+<p><img src="models/m4.png" class="img-responsive" alt=""></p>
+<p>Notice the green path. That path is not estimated, but jAMM suggests to estimate it. That is because the model we just set up is not complete in terms of <code>x3</code> mediation (recall that jAMM assumes you want to estimate mediation models).</p>
+<p><img src="models/m4.png" class="img-responsive" alt=""></p>
+<p>If seeing the suggested paths disturb you, you can suppress them in the <code>Mediation options</code> tab.</p>
+</div>
+<div id="multiple-mediators" class="section level1">
+<h1>Multiple mediators</h1>
+<div id="parallel-mediators" class="section level2">
+<h2>Parallel mediators</h2>
+<p>By defining two or more variables as mediators in the variables input panel, we obtain a parallel mediators model by default.</p>
+<p><img src="models/m5.png" class="img-responsive" alt=""></p>
+<p>You can put as many mediators as you want</p>
+<p><img src="models/m6.png" class="img-responsive" alt=""></p>
+</div>
+<div id="mediators-chains" class="section level2">
+<h2>Mediators chains</h2>
+<p>Several mediation models require building some sort of mediators chain. For instance, we can have that variable <code>x</code> is measured 4 times,and we want to see if <code>x1</code> affects <code>x2</code>, <code>x2</code> affects <code>x3</code>, and <code>x3</code> affects <code>x4</code>. To build such a model, first we select <code>x1</code> as the independent variable (it is the only exogenous variable in the model), <code>x2</code> and <code>x3</code> as mediators and <code>x4</code> as dependent variable.</p>
+<p><img src="models/m7_1.png" class="img-responsive" alt=""></p>
+<p>While we do so, jAMM builds a parallel mediators model (the default), but we ignore it and move on to change that. In fact, as compared with a parallel mediators model, the model we have in mind requires also that <code>x2</code> be a predictor of <code>x3</code>. We go to <code>Mediators models</code> tab and add <code>x2</code> in the field <em>Mediator=x3</em>. There we have it.</p>
+<p><img src="models/m7.png" class="img-responsive" alt=""></p>
+</div>
+<div id="multi-layer-model" class="section level2">
+<h2>Multi-layer model</h2>
+<p>Assume you have <code>x1</code> as independent, that influences <code>x2</code> and <code>x3</code>, that in turn affect <code>y</code> through <code>m1</code>. We can think of this model as a multi-layer model in terms of layers of mediators: first the <code>x2</code> and <code>x3</code> layer, then <code>m1</code> layer. To set it up, first we put all endogenous predictors in the mediators field and <code>x1</code> and <code>y</code> in the independent and dependent field, respectively.</p>
+<p><img src="models/m8_1.png" class="img-responsive" alt=""></p>
+<p>Again, we should change the automatically created parallel mediators model. We should add the paths from <code>x2</code> and <code>x3</code> to <code>m1</code>. To do so we go to <code>Mediators models</code> tab and add <code>x2</code> and <code>x3</code> in the field <em>Mediator=m1</em>.</p>
+<p><img src="models/m8.png" class="img-responsive" alt=""></p>
+<p>Suprised by the ugly picture? Well, the model is correct but the picture can look better if one re-arranges the position of the terms. First, remove the mediators (jAMM does not like re-arranging terms already defined, so it is better to start anew). We want the last mediator <code>m1</code> to be in the center of the diagram, so we should put it as the second mediator of the list. Then we change the <code>Mediators models</code> as we did before. Here is the input: a bit better looking. <img src="models/m8_2.png" class="img-responsive" alt=""></p>
+<p>Here is the output.</p>
+<p><img src="models/m8_3.png" class="img-responsive" alt=""></p>
+</div>
+</div>
+<div id="multiple-iv-and-multiple-mediators" class="section level1">
+<h1>Multiple IV and multiple mediators</h1>
+<p>One can combine the multiple IVs and the multiple mediators models to better suit the research aims. By defining multiple IV and multiple mediators in the variale input tabs, one obtains, by default, a full parallel mediators model.</p>
+<p><img src="models/m9.png" class="img-responsive" alt=""></p>
+<p>Obviously, one can then change the structure of the model, for instance by making the mediators a chain of mediators, or by removing some path from one IV to one mediator.</p>
+<p><img src="models/m11.png" class="img-responsive" alt=""></p>
+<p>Notice that the previos model is not equivalent to two independent simple mediation models, because in the present model all the effects on the dependent variable <code>y</code> are computed keeping constant both independent variables. This feature is reminded by the notes of the path diagram.</p>
+<p><img src="models/m11_2.png" class="img-responsive" alt=""></p>
+</div>
+<div id="mis-specified-models" class="section level1">
+<h1>Mis-specified models</h1>
+<p>There are models that may make a lot of sense in general, but are not mediation models. These models will not be estimated by jAMM, because they cannot produce mediated effects (that are the effects jAMM requires).</p>
+<p>The first example is a model without mediators effect.</p>
+<p><img src="models/m12.png" class="img-responsive" alt=""></p>
+<p>In this model I removed the path from <code>m1</code> to <code>y</code> in the <code>Full model</code> tab. That creates a model in which the mediator has no role, and thus the path diagram shows a red path indicating that that path is required. It also signals the problem in the <code>Models info</code> table.</p>
+<p><img src="models/m12_2.png" class="img-responsive" alt=""></p>
+<p>Another possible error is to have each mediator to predict all the other mediators. That would make the model recursive, and not a mediation model.</p>
+<p><img src="models/m13.png" class="img-responsive" alt=""></p>
+<p>jAMM warns you of the problem with a purple path in the diagram, and with some explanation in the <code>Models info</code> table.</p>
+<p><img src="models/m13_2.png" class="img-responsive" alt=""></p>
+</div>
 <div id="list-of-docs" class="section level1">
 <h1>List of docs</h1>
 <ul>
