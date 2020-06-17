@@ -69,7 +69,7 @@ The `Indirect` row reports the _mediated effect_. Thus, this is the classical $a
 
 The `z` test associated with the mediated effect is the _large sample_ z test of the mediated effect, which is a slightly more accurate version of the Sobel test. The confidence intervals are also computed using _large sample_ approximation, but the bootstrap version of confidence intervals can be asked in the `Mediation options` tab (see below).
 
-The `Direct` row shows the effect of the independent variable not mediated by `EXP`, again for the average level of `SVO`, the coefficient usually denoted by $c^\prime$ in the mediation jargon. The `Total` effect is the overall effect of `PRIME` on `BEH`, for the average level of `SVO`, that is $c=a \cdot b + c^\prime$. All the `z` tests associated with these coefficients test the null-hypothesis that the corresponding coefficient is zero. Confidence intervals are computed with the same method used for the indirect effect.
+The `Direct` row shows the effect of the independent variable not mediated by `selfesteem`, the coefficient usually denoted by $c^\prime$ in the mediation jargon. The `Total` effect is the overall effect of `grades` on `hapiness`, that is $c=a \cdot b + c^\prime$. All the `z` tests associated with these coefficients test the null-hypothesis that the corresponding coefficient is zero. Confidence intervals are computed with the same method used for the indirect effect.
 
 Finally, the $\beta$ column shows the standardized solution coefficients.
 
