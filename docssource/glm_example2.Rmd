@@ -95,7 +95,7 @@ In conditional mediation models, the first thing we want to check is whether the
 
 <img src="examples/muller/interactions.png" class="img-responsive" alt="">
 
-In the table we see that `SVO` does not moderate the path from `PRIME` to `EXP` (at least not in a substantial way), because the interaction between `PRIME` and `SVO` in predicting `EXP` is not significant. However, `SVO` moderates the path from `EXP` to `BEH`, because the interaction between `EXP` and `SVO` in predicting `BEH` is clearly different from zero. This means that the conditional mediation is due to the fact that when `PRIME` affects `EXP`, its effect depends on `SVO`. This model is sometimes called _mediated moderation_, because the interaction comes before the mediator in the mediation pathway. 
+In the table we see that `SVO` does not moderate the path from `PRIME` to `EXP` (at least not in a substantial way), because the interaction between `PRIME` and `SVO` in predicting `EXP` is not significant. However, `SVO` moderates the path from `EXP` to `BEH`, because the interaction between `EXP` and `SVO` in predicting `BEH` is clearly different from zero. This means that the conditional mediation is due to the fact that when `EXP` affects `BEH`, its effect depends on `SVO`. This model is sometimes called _moderated mediation_, because the interaction comes after the mediator in the mediation pathway. 
 
 After finding a significant interaction, we know that the mediated effect depends on the levels of the moderator. Thus, we should see how the mediated effects look when estimated at different levels of the moderators. We can call these __simple mediated effects__.
 
