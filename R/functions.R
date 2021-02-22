@@ -149,8 +149,6 @@ get_commits<-function() {
   query<-paste0("/repos/:owner/:repo/branches")
   vers<-gh(query, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   vernames<-sapply(vers,function(a) a$name)
-  print(vers)
-  print(versnames)
   ord<-order(vernames)
   vernames<-vernames[ord]
   vers<-vers[ord]
@@ -176,7 +174,8 @@ get_commits<-function() {
       j<-j+1
       }
     }
-    date<-coms[[1]]$commit$author$date
+    if (length(coms)>0)
+        date<-coms[[1]]$commit$author$date
   }
   data<-data.frame(do.call("rbind",results),stringsAsFactors = FALSE)
   data<-data[!duplicated(data$sha),]
