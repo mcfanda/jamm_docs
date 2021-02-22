@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="(Marcello Gallucci)" />
@@ -35,6 +35,15 @@
 
   gtag('config', 'UA-129366054-1');
 </script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -81,6 +90,7 @@ h6 {
 }
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -97,7 +107,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -246,6 +255,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,48 +268,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -313,6 +284,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -348,8 +325,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -525,11 +500,19 @@ mod1$coefficients[2]*mod2$coefficients[4]</code></pre>
 ## 2.260951</code></pre>
 <p>We can see that the estimates of the interactions are identical to the ones obtained with jAMM (cf <code>Moderator effects</code> table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on <code>R lavaan package</code>, that uses the <a href="http://lavaan.ugent.be/tutorial/est.html">expected information matrix</a> to obtain the standard errors.</p>
 <p>As regards the mediated effects, from the models we just estimated we can compute the average mediated effect, because the IV and the MO variables are centered to their means. We can use <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">R package mediation</a>. Confidence intervals are computed with the bootstrap percentile method. Because we have a moderation, we should tell the <code>mediate()</code> command that we want the estimates of mediated effect for SVO equal to its mean. We do that with the <code>covariate</code> option.</p>
-<pre class="r"><code>library(mediation, quietly = T)
-nsim =1000 # number of bootstrap samples to draw
+<pre class="r"><code>library(mediation, quietly = T)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:Rsearchable&#39;:
+## 
+##     select</code></pre>
+<pre><code>## mediation: Causal Mediation Analysis
+## Version: 4.5.0</code></pre>
+<pre class="r"><code>nsim =1000 # number of bootstrap samples to draw
 modValue&lt;-mean(data$SVO)
-med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)
-summary(med)</code></pre>
+med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
+<pre><code>## Running nonparametric bootstrap</code></pre>
+<pre class="r"><code>summary(med)</code></pre>
 <pre><code>## 
 ## Causal Mediation Analysis 
 ## 
@@ -538,10 +521,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             4.5219       1.8437         7.93  &lt;2e-16 ***
-## ADE              4.3385      -0.0849         8.84   0.056 .  
-## Total Effect     8.8604       4.4411        13.61  &lt;2e-16 ***
-## Prop. Mediated   0.5103       0.2132         1.02  &lt;2e-16 ***
+## ACME              4.522        1.804         7.57  &lt;2e-16 ***
+## ADE               4.339       -0.293         8.83   0.064 .  
+## Total Effect      8.860        4.545        13.22  &lt;2e-16 ***
+## Prop. Mediated    0.510        0.221         1.05  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -553,8 +536,9 @@ summary(med)</code></pre>
 <p>Then, we can test the mediated effect at different levels of the moderator SVO.</p>
 <pre class="r"><code>## moderator at 1 SD below the average
 modValue&lt;-mean(data$SVO)-sd(data$SVO)
-med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)
-summary(med)</code></pre>
+med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
+<pre><code>## Running nonparametric bootstrap</code></pre>
+<pre class="r"><code>summary(med)</code></pre>
 <pre><code>## 
 ## Causal Mediation Analysis 
 ## 
@@ -563,10 +547,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value
-## ACME             -1.178       -3.888         0.84    0.30
-## ADE               4.223       -1.638         9.92    0.15
-## Total Effect      3.045       -2.474         8.30    0.25
-## Prop. Mediated   -0.387       -4.506         2.72    0.49
+## ACME             -1.178       -4.321         0.61    0.29
+## ADE               4.223       -1.017        10.02    0.13
+## Total Effect      3.045       -1.795         8.77    0.27
+## Prop. Mediated   -0.387       -4.773         4.85    0.50
 ## 
 ## Sample Size Used: 100 
 ## 
@@ -574,8 +558,9 @@ summary(med)</code></pre>
 ## Simulations: 1000</code></pre>
 <pre class="r"><code>## moderator at 1 SD above the average
 modValue&lt;-mean(data$SVO)+sd(data$SVO)
-med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)
-summary(med)</code></pre>
+med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
+<pre><code>## Running nonparametric bootstrap</code></pre>
+<pre class="r"><code>summary(med)</code></pre>
 <pre><code>## 
 ## Causal Mediation Analysis 
 ## 
@@ -584,10 +569,10 @@ summary(med)</code></pre>
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value   
-## ACME             10.753        3.216        19.45   0.006 **
-## ADE               4.454       -2.531        11.28   0.200   
-## Total Effect     15.208        5.603        24.52   0.006 **
-## Prop. Mediated    0.707        0.370         1.26   0.004 **
+## ACME             10.753        2.997        19.10   0.010 **
+## ADE               4.454       -1.598        11.21   0.158   
+## Total Effect     15.208        5.779        24.11   0.002 **
+## Prop. Mediated    0.707        0.350         1.16   0.012 * 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -621,13 +606,56 @@ Got comments, issues or spotted a bug? Please open an issue on <a href=" https:/
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

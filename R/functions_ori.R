@@ -144,11 +144,10 @@ write_commits<-function() {
   #coms
 }
 
-
 get_commits<-function() {
   
   query<-paste0("/repos/:owner/:repo/branches")
-  vers<-gh::gh(query, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
+  vers<-gh(query, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   vernames<-sapply(vers,function(a) a$name)
   ord<-order(vernames)
   vernames<-vernames[ord]
@@ -161,31 +160,71 @@ get_commits<-function() {
   vernames<-sapply(vers,function(a) a$name)
   r<-vers[[1]]
   query<-paste0("/repos/:owner/:repo/commits")
-  coms<-gh::gh(query,sha=r$name, owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+  coms<-gh(query,sha=r$name, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   date<-coms[[1]]$commit$author$date
   vers<-vers[2:length(vernames)]
   j<-1
-  r<-vers[[2]]
   results<-list()
   for (r in vers) {
     query<-paste0("/repos/:owner/:repo/commits")
-    coms<-gh::gh(query, sha=r$name, since=date,owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
-    if (length(coms)==0)
-      next()
+    coms<-gh(query, sha=r$name, since=date,owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
     for (com in coms) {
+      if ("sha" %in% names(com)) {
       results[[j]]<-c(sha=com$sha,msg=com$commit$message,version=r$name)
       j<-j+1
+      }
     }
-    date<-coms[[1]]$commit$author$date
+    if (length(coms)>0)
+        date<-coms[[1]]$commit$author$date
   }
   data<-data.frame(do.call("rbind",results),stringsAsFactors = FALSE)
   data<-data[!duplicated(data$sha),]
   data<-data[!duplicated(data$msg),]
-  data  
+  
 }
 
 
-write_commits2<-function(commits) {
+write_commits2_old<-function() {
+  commits<-get_commits()
+  sel<-list()
+  j<-1
+  for (i in 1:dim(commits)[1]) {
+    msg<-commits[i,"msg"]
+    test<-grep("#",msg,fixed=T)
+    if (length(test)>0) next()
+    test<-grep("!",msg,fixed=T)
+    if (length(test)>0) next()
+    test<-grep("Merge",msg,fixed=T)
+    if (length(test)>0) next()
+    test<-grep("§",msg,fixed=T)
+    if (length(test)>0) msg<-paste("<b>",msg,"</b>")
+    test<-grep("#",msg,fixed=T)
+    if (length(test)>0) {
+      next()
+    }
+    sel[[j]]<-c(msg,commits[i,"version"])
+    j<-j+1
+  }
+  sel<-rev(sel)
+  versions<-rev(unique(commits$version))
+  coms<-do.call("rbind",sel)
+  for (i in seq_along(versions)) {
+    rel<-""
+    if (i==1) rel<-"(future)"
+    if (i==2) rel<-"(current)"
+    
+    cat(paste("#",versions[i],rel,"\n\n"))
+    cs<-coms[coms[,2]==versions[i],1]
+    for (j in cs)
+      cat(paste("*",j,"\n\n"))
+  }
+  #coms
+}
+
+write_commits2<-function() {
+  commits<-get_commits()
+  if (dim(commits)[1]==0)
+     return()
   sel<-list()
   j<-1
   for (i in 1:dim(commits)[1]) {
@@ -197,7 +236,7 @@ write_commits2<-function(commits) {
     }
     for (rule in BANNED_COMMITS_GREP) {
       if (length(grep(rule,msg)))
-        gonext=TRUE
+           gonext=TRUE
     }
     
     if (gonext)

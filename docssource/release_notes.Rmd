@@ -18,12 +18,16 @@ source("../R/functions.R")
 
 ```
 
-```{r, echo=FALSE,results='asis'}
+```{r, include=FALSE}
+commits<-get_commits()
 
-cw<-write_commits2()
 
 ```
 
+```{r, echo=FALSE,results='asis'}
+write_commits2(commits)
+
+```
 
 
 

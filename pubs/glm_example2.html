@@ -36,6 +36,15 @@
   gtag('config', 'UA-129366054-1');
 </script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
   pre:not([class]) {
@@ -80,6 +89,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -451,7 +461,7 @@ div.tocify {
 <h1>Results</h1>
 <p>In conditional mediation models, the first thing we want to check is whether the moderator actually has a moderating effect on the components of the mediated effect. We can check that in the results table <code>Moderation effects (interactions)</code>.</p>
 <p><img src="examples/muller/interactions.png" class="img-responsive" alt=""></p>
-<p>In the table we see that <code>SVO</code> does not moderate the path from <code>PRIME</code> to <code>EXP</code> (at least not in a substantial way), because the interaction between <code>PRIME</code> and <code>SVO</code> in predicting <code>EXP</code> is not significant. However, <code>SVO</code> moderates the path from <code>EXP</code> to <code>BEH</code>, because the interaction between <code>EXP</code> and <code>SVO</code> in predicting <code>BEH</code> is clearly different from zero. This means that the conditional mediation is due to the fact that when <code>PRIME</code> affects <code>EXP</code>, its effect depends on <code>SVO</code>. This model is sometimes called <em>mediated moderation</em>, because the interaction comes before the mediator in the mediation pathway.</p>
+<p>In the table we see that <code>SVO</code> does not moderate the path from <code>PRIME</code> to <code>EXP</code> (at least not in a substantial way), because the interaction between <code>PRIME</code> and <code>SVO</code> in predicting <code>EXP</code> is not significant. However, <code>SVO</code> moderates the path from <code>EXP</code> to <code>BEH</code>, because the interaction between <code>EXP</code> and <code>SVO</code> in predicting <code>BEH</code> is clearly different from zero. This means that the conditional mediation is due to the fact that when <code>EXP</code> affects <code>BEH</code>, its effect depends on <code>SVO</code>. This model is sometimes called <em>moderated mediation</em>, because the interaction comes after the mediator in the mediation pathway.</p>
 <p>After finding a significant interaction, we know that the mediated effect depends on the levels of the moderator. Thus, we should see how the mediated effects look when estimated at different levels of the moderators. We can call these <strong>simple mediated effects</strong>.</p>
 <p>Simple mediated effects are in the <code>Conditional Mediation</code> results section. The results show the mediatated (indirect), direct, and total effects at different levels of the moderators. By default, the levels of the moderators are <code>SVO=mean-SD</code>, <code>SVO=mean</code>, and <code>SVO=mean+SD</code>. The levels of the moderator used to computed the conditional mediation parameters can be changed in the <code>Covariates Scaling</code> tab.</p>
 <p><img src="examples/muller/results0.png" class="img-responsive" alt=""></p>
@@ -491,7 +501,7 @@ Got comments, issues or spotted a bug? Please open an issue on <a href=" https:/
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -530,7 +540,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
