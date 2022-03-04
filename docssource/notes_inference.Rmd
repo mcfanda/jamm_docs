@@ -1,5 +1,5 @@
 ---
-title: "Sem"
+title: "Seemingly odd results in mediation analysis"
 category: notes
 topic: inference
 nickname: notes_inference
