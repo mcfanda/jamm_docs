@@ -148,3 +148,19 @@ div.littletitle {
   font-weight: bold;
   font-style: normal;
 }
+
+
+span.jamovi {
+  font-weight: bold;
+  color:   #3E6DA9;
+  font-family: Tahoma, Geneva, sans-serif;
+  text-transform: lowercase;
+}
+
+span.modulename {
+  font-weight: bold;
+  color:   #3E6DA9;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+

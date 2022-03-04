@@ -23,3 +23,11 @@ Here you can find some application of jAMM module.
 
 `r include_examples("glm")`
 
+Some notes on mediation loosely related with the software.
+
+
+#  Notes
+
+`r list_pages(category="notes")`
+
+

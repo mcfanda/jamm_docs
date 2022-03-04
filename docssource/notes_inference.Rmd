@@ -1,0 +1,125 @@
+---
+title: "Sem"
+category: notes
+topic: inference
+nickname: notes_inference
+author: "(Marcello Gallucci)"
+bibliography: 
+         - bib.bib
+output: 
+  html_document:
+    includes:
+         in_header: ganalytics.txt
+    toc: true
+    toc_float:
+         collapsed: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r echo=FALSE,results='hide'}
+source("../R/constants.R")
+source("../R/functions.R")
+```
+
+
+`r keywords("jamovi, mediation, non-significant effect, suppression")`
+
+`r version("any")` 
+
+  
+# Introduction
+
+Here we review a sample of mediation analysis cases where the results may be difficult to interpret or to understand. These topics are not related with the software, they apply to any software used for mediation analysis. Nonetheless, because these cases elicit a lot of questions by `r module` users, we put here some notes that may help answering these questions.
+
+## Basics
+
+In mediation analysis (intercepts omitted), 
+
+$$y_i=c\cdot x_i$$
+$$ m_i=a\cdot x_i$$
+$$ y_i=b \cdot m_i+c'\cdot x_i$$
+
+it is well known [@baronandandkenny] that $c=c'+ab$, and this is always true (if no missing values are present). We also know that in the general case $c>a\cdot b$, because the mediated effect $a \cdot b$ is part of the total effect $c$. As logically expected, this means that $c'$ (direct effect) and $a \cdot b$ have the same sign.
+
+# Issue 1:  Mediated effect larger than total effect
+
+There are some cases, however, in which the mediated effect turns out to be larger than the total effect, that is $a \cdot b > c$. It is clear that this implies that $c'$ and $a \cdot b$ have different signs. For instance, one can have $c=10$, $c'=-1$ and $a \cdot b=11$. There is nothing wrong with that, but let see when that happens and what it implies.
+
+There are two cases of interest: 1) In the first case, the most common one, the direct effect is very small, often not significant. 2) In the second case, the total effect is very small (or not significant), whereas the mediated effect is substantial and significant. These two cases have very different interpretations.
+
+For simplicity, we assume that $a \cdot b>0$ (and statistically significant), but all our reasoning works also when it is negative, inverting all the signs. 
+
+# Case 1: very small direct effect $c'$.
+
+## What happens
+When the direct effect $c'$ is close to zero, especially if not significant, we conclude that in the population the direct effect is practically null. We, however, have only the sample estimate of $c'$, which is subject to sample variability. Thus, out of chance, it may come out a bit larger than zero or a bit lower than zero. Indeed, when $c'$ is very small and not significant, its confidence interval contains zero, signaling that $c'$ may range from negative to positive values out of chance. 
+
+Thus, in one sample it may come out negative, yielding a mediated effect larger than the total effect. For instance, assume that the population effects are $\chi=10$, $\chi'=0$ and $\alpha \cdot \beta=10$ (population values are always in greek, never known why). Sampling a sample from this population may give a direct effect of -1, for instance, just because of random variation. With $c'=-1$, and $c=10$, $a \cdot b$ must be 11, because $10=-1+11$.
+
+
+## Interpretation
+
+We usually interpret these results by simply saying that there is a mediation effect and it is complete (sometime called _full mediation_), and that the mediation effect is statistically as large as the total effect. Full vs partial mediation is not a very valid distinction, but some people find the concept useful. The only drawback is that this case does not allow reporting the mediated effect as a proportion of the total effect, because the proportion would be larger than 1. One simply does not report the mediated effect as a proportion.
+
+# Case 2: very small total effect 
+
+## What happens
+When the total effect is close to zero, but the mediated effect is substantial, we are likely in a _suppression model_ [@mackinnon2000equivalence]. Suppression models are estimated using the same technique of mediation models, but their starting point is different. Instead of asking the question "why do I see an effect of X on Y?", we ask : "Why I do not see an effect of X on Y?", or more generally, "Why is the effect of X on Y so small?".
+
+Assume again that in the population we have a model with $\chi=0$, $\chi'=-10$ and $\alpha \cdot \beta=10$, and our estimates are accurate: $c=0$, and $c=-10$, $a \cdot b=10$. Clearly $a \cdot b>c$, but what is the meaning of these results? The meaning is that the independent variable $x$ would influence $y$ if $m$ was not playing a suppressing role, interfering with the effect of $x$ on $y$. 
+
+Let see an example. Assume a teacher organizes practice sections before a very difficult exam. The teacher measures the number of sections in which each student participated ($x$) and correlate it to the exam score ($y$). Surprisingly, the effect of $x$ on $y$ is null ($c=0$). The teacher may ask why is this the case, because one would expect the practice sections to help with the exam. To understand the issue, the teacher measures (in another study), the number of sections attended by each student, the exam grade and the anxiety before the exam. Assume it turns out that the more sections one attends, the stronger the anxiety, say $a=5$, maybe because students realize how difficult the exam will be. However, anxiety interferes a bit with performance, so the more anxious the student, the worse is the grade, say $b=-2$. The indirect effect will $a \cdot b=(5) \cdot (-2)=-10$. If so, we must have $c'=10$, becaue $0=10-10$. 
+
+## Interpretation
+How do we interpret the results? Attending more sections would have a positive effect on grade, but because attending more sections increases the anxiety, which in turns decreases the grade, the potential effect of attending more sections is counteracted, or _suppressed_, by anxiety.
+
+In general, $c'$ indicates what would be the effect of $x$ on $y$ if $m$ were not changed by $x$. The indirect effect (or _suppression effect_) $a \cdot b$ indicates what are the consequences on $y$ of $x$ affecting $m$ and $m$ affecting $y$.
+
+Statistically, the model is as valid as a mediational model. The interpretation is different.
+
+
+# Issue 2:  Mediated significant, Total non significant
+
+Related to this topic is another seemingly strange set of results: A significant indirect effect in the presence of a non-significant total effect, all signs being the same. That is, testing $c$ yields a non significant effect, testing $a\cdot b$ yields a significant result, and both $ab$ and $c'$ have the same sign (so we are not in the cases discussed above). 
+
+This case is puzzling because it has implications on the very foundation of a mediation analysis: Can I estimate and interpret a mediation effect when the total effect is non-significant? There is a lot of discussion in the literature about this issue [@agler2017], here we want to understand why this case may happen.
+
+For simplicity, assume $c'=0$, such that $c=a \cdot b$, but $p_c>.05$ and $p_{ab}<.05$. The difficulty here is to understand how comes that two equal quantities yield two different inferential test results. The reason is that inferential tests are not only about the size of a parameter (a coefficient effect size), they depend on the sample variability of the parameter (its standard error). Sample variability influences statistical power, and statistical power influences our chances to get a significant result. It turns out [@kenny2014power] that the test of the indirect effect $a \cdot b$ is more powerful than the test of the total effect $c$, sometimes dramatically more powerful. As such, expecially when $c$ and $a \cdot b$ are not large effects, it is more likely to find  $a \cdot b$ as significant than finding $c$.
+
+@kenny2014power provide a beautiful metaphor to explain the differences in power of the two tests. 
+
+"It might be very hard to throw a ball 70 m in one throw. However,
+it is a lot easier to throw the ball 70 m in two throws. The
+single test of $c$ is like the single throw, whereas the test
+of $a \cdot b$ is like the double throw. This metaphor even helps
+one understand that the power gain is greatest when a
+and b are nearly equal and there is less of an advantage
+when they are relatively different. That is, one might be
+able to make two throws of 35 m each, but not one throw
+of 10 m and another of 60 m."(pag. 338)
+
+A more technical account for this case can be given by considering a fundamental characteristic of sample estimates: Generally speaking, the more components are involved in a statistical quantity, the larger will be the sample variability of the estimate of that quantity (its standard error $SE$). Thus, if $q$ and $q'$ are two equal quantities, but $q=f(\gamma)$ (recall the Greek letter rule) and $q'=f(\alpha , \beta)$, other things being equal, $SE(q)<SE(q')$, because $SE(q)$ depends on the sample variability of the estimate of $\gamma$, whereas $q'$ depends on the sum of the sample variability of the estimates of $\alpha$ and the estimates of $\beta$. Sample variability adds up, and it is always positive. This principle it is easy to grasp: sample variability is like uncertainty. If an outcome depends on different uncertain decisions, the more decisions one has to make, the more uncertain is the outcome. Please notice that this argument is independent to the statistical technique used to make inference (bootstrap or standard method). Sample variability exists independently of how we estimate it.
+
+In the mediation model, we know that the indirect effect is $a\cdot b$, so its standard error depends on the sample variability of $a$ and $b$. For the total effect, however, we know that $c=a \cdot b + c'$, so its standard error depends on the variability of $a$, $b$ and $c'$. More components, more uncertainty. 
+
+Thus, when the mediated effect is significant but the total effect is not (and no suppression is present), it is likely that one lacks the power to detect the total effect.
+
+Wait a minute! (one can say) But the total effect is a simple regression coefficient, why should it be related to the variability of  $a$, $b$ and $c'$? Well, if $c$ was "only" a simple regression coefficient, $c=c'$, we would have $a \cdot b=0$, and thus we would not get a significant test for the mediated effect. If the mediated effect is not zero, it is part of the sources of variation of $c$, no matter what our model is.
+
+
+
+## Interpretation
+
+What can we do in this case? First, we should wonder if our study is underpowered. Very likely, increasing the sample size will clear the issue: either the total effect becomes significant (so it was indeed a lack of power) or the mediated effect become not significant (so it was a fluke).
+
+Second, we can interpret the results as _an indication_ of a mediating mechanism linking $y$ to $x$, but we still do not possess enough evidence to support the actual link between $y$ to $x$. In other words, one can say something along this line: We do not have enough evidence to show that $x$ influences $y$, but if this influence is real, it is probably due to the intervening effect of $m$. A weak position, but nonetheless standing.
+
+
+
+# References
+
+
+
+
+
