@@ -1,4 +1,5 @@
 library(rmarkdown)
+library(Rsearchable)
 HERE<-getwd()
 msg<-"updates"
 render_site("docssource/")

@@ -1,5 +1,6 @@
 # folders should be absolute or relative to the docssource folder
 # do not use the trailing slash
+MODULE_NAME="jAMM"
 MODULE_FOLDER="../../jamm"
 SOURCE_FOLDER="pubs"
 TARGET_FOLDER="../jamovi-amm.github.io"

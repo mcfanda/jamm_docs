@@ -4,7 +4,6 @@ library(Rsearchable)
 library(gh)
 
 
-
 datafile<-function(name,file) {
   if (length(grep(":/",file,fixed = T))==0)
     file<-paste0(DATALINK,"/",file)
@@ -16,8 +15,16 @@ keywords<-function(key) {
   paste(span,key,"</span>")
 }
 
+jamovi<-function() {
+  paste0('<span class="jamovi">jamovi</span>')
+}
+
+module<-paste0('<span class="modulename">',MODULE_NAME,'</span>')
+
+
+
 version<-function(ver) {
-    paste('<span class="version"> <span class="versiontitle"> GALMj version ≥ </span> ',ver,' </span>')
+    paste('<span class="version"> <span class="versiontitle"> ',MODULE_NAME,' version ≥ </span> ',ver,' </span>')
 }
 
 draft<-'<span class="draft"> Draft version, mistakes may be around </span>'
@@ -51,7 +58,7 @@ get_pages<-function(nickname=NULL,topic=NULL,category=NULL) {
   
   files<-get_files()
   sfiles<-searchable(files)  
-  res<-lookup(sfiles,criteria)
+  res<-lookup.searchable(sfiles,criteria)
   res
 }
 
@@ -161,7 +168,7 @@ get_commits<-function() {
   vernames<-sapply(vers,function(a) a$name)
   r<-vers[[1]]
   query<-paste0("/repos/:owner/:repo/commits")
-  coms<-gh::gh(query,sha=r$name, owner = "gamlj", repo = "gamlj",.limit=Inf,.token=API_TOKEN)
+  coms<-gh::gh(query,sha=r$name, owner = MODULE_REPO_OWNER, repo = MODULE_REPO,.limit=Inf,.token=API_TOKEN)
   date<-coms[[1]]$commit$author$date
   vers<-vers[2:length(vernames)]
   j<-1
