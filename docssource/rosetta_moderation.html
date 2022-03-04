@@ -460,15 +460,8 @@ mod1$coefficients[2]*mod2$coefficients[4]</code></pre>
 ## 2.260951</code></pre>
 <p>We can see that the estimates of the interactions are identical to the ones obtained with jAMM (cf <code>Moderator effects</code> table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on <code>R lavaan package</code>, that uses the <a href="http://lavaan.ugent.be/tutorial/est.html">expected information matrix</a> to obtain the standard errors.</p>
 <p>As regards the mediated effects, from the models we just estimated we can compute the average mediated effect, because the IV and the MO variables are centered to their means. We can use <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">R package mediation</a>. Confidence intervals are computed with the bootstrap percentile method. Because we have a moderation, we should tell the <code>mediate()</code> command that we want the estimates of mediated effect for SVO equal to its mean. We do that with the <code>covariate</code> option.</p>
-<pre class="r"><code>library(mediation, quietly = T)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;MASS&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:Rsearchable&#39;:
-## 
-##     select</code></pre>
-<pre><code>## mediation: Causal Mediation Analysis
-## Version: 4.5.0</code></pre>
-<pre class="r"><code>nsim =1000 # number of bootstrap samples to draw
+<pre class="r"><code>library(mediation, quietly = T)
+nsim =1000 # number of bootstrap samples to draw
 modValue&lt;-mean(data$SVO)
 med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
 <pre><code>## Running nonparametric bootstrap</code></pre>
@@ -481,10 +474,10 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             4.5219       2.0164         7.81  &lt;2e-16 ***
-## ADE              4.3385       0.0587         8.81   0.050 *  
-## Total Effect     8.8604       4.1793        13.25   0.002 ** 
-## Prop. Mediated   0.5103       0.2482         0.98   0.002 ** 
+## ACME              4.522        1.898         7.87   0.006 ** 
+## ADE               4.338        0.037         8.90   0.050 *  
+## Total Effect      8.860        4.215        13.49  &lt;2e-16 ***
+## Prop. Mediated    0.510        0.226         0.99   0.006 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -507,10 +500,10 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value
-## ACME             -1.178       -4.191         0.96    0.32
-## ADE               4.223       -1.813         9.68    0.14
-## Total Effect      3.045       -2.343         8.28    0.26
-## Prop. Mediated   -0.387       -6.523         4.69    0.52
+## ACME             -1.178       -4.033         0.77    0.26
+## ADE               4.223       -1.761        10.26    0.19
+## Total Effect      3.045       -2.821         8.83    0.33
+## Prop. Mediated   -0.387       -4.736         5.02    0.51
 ## 
 ## Sample Size Used: 100 
 ## 
@@ -528,11 +521,11 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## 
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
-##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             10.753        3.255        19.26   0.002 ** 
-## ADE               4.454       -2.157        10.77   0.182    
-## Total Effect     15.208        6.886        24.58  &lt;2e-16 ***
-## Prop. Mediated    0.707        0.331         1.22   0.002 ** 
+##                Estimate 95% CI Lower 95% CI Upper p-value   
+## ACME             10.753        3.109        18.92   0.008 **
+## ADE               4.454       -1.735        11.30   0.156   
+## Total Effect     15.208        6.388        24.21   0.002 **
+## Prop. Mediated    0.707        0.323         1.17   0.006 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 

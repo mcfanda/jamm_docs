@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="(Marcello Gallucci)" />
+
+
+<title>Seemingly odd results in mediation analysis</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129366054-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-129366054-1');
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">jAMM</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="glm.html">Docs</a>
+</li>
+<li>
+  <a href="examples.html">Examples</a>
+</li>
+<li>
+  <a href="rosetta.html">Rosetta store</a>
+</li>
+<li>
+  <a href="release_notes.html">Release notes</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jamovi-amm/jamm">View on Github</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Seemingly odd results in mediation analysis</h1>
+<h4 class="author">(Marcello Gallucci)</h4>
+
+</div>
+
+
+<p><span class="keywords"> <span class="keytitle"> keywords </span> jamovi, mediation, non-significant effect, suppression </span></p>
+<p><span class="version"> <span class="versiontitle"> jAMM version ≥ </span> any </span></p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Here we review a sample of mediation analysis cases where the results may be difficult to interpret or to understand. These topics are not related with the software, they apply to any software used for mediation analysis. Nonetheless, because these cases elicit a lot of questions by <span class="modulename">jAMM</span> users, we put here some notes that may help answering these questions.</p>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
+<p>In mediation analysis (intercepts omitted),</p>
+<p><span class="math display">\[y_i=c\cdot x_i\]</span> <span class="math display">\[ m_i=a\cdot x_i\]</span> <span class="math display">\[ y_i=b \cdot m_i+c&#39;\cdot x_i\]</span></p>
+<p>it is well known <span class="citation">(Baron and Kenny 1986)</span> that <span class="math inline">\(c=c&#39;+ab\)</span>, and this is always true (if no missing values are present). We also know that in the general case <span class="math inline">\(c&gt;a\cdot b\)</span>, because the mediated effect <span class="math inline">\(a \cdot b\)</span> is part of the total effect <span class="math inline">\(c\)</span>. As logically expected, this means that <span class="math inline">\(c&#39;\)</span> (direct effect) and <span class="math inline">\(a \cdot b\)</span> have the same sign.</p>
+</div>
+</div>
+<div id="issue-1-mediated-effect-larger-than-total-effect" class="section level1">
+<h1>Issue 1: Mediated effect larger than total effect</h1>
+<p>There are some cases, however, in which the mediated effect turns out to be larger than the total effect, that is <span class="math inline">\(a \cdot b &gt; c\)</span>. It is clear that this implies that <span class="math inline">\(c&#39;\)</span> and <span class="math inline">\(a \cdot b\)</span> have different signs. For instance, one can have <span class="math inline">\(c=10\)</span>, <span class="math inline">\(c&#39;=-1\)</span> and <span class="math inline">\(a \cdot b=11\)</span>. There is nothing wrong with that, but let see when that happens and what it implies.</p>
+<p>There are two cases of interest: 1) In the first case, the most common one, the direct effect is very small, often not significant. 2) In the second case, the total effect is very small (or not significant), whereas the mediated effect is substantial and significant. These two cases have very different interpretations.</p>
+<p>For simplicity, we assume that <span class="math inline">\(a \cdot b&gt;0\)</span> (and statistically significant), but all our reasoning works also when it is negative, inverting all the signs.</p>
+</div>
+<div id="case-1-very-small-direct-effect-c." class="section level1">
+<h1>Case 1: very small direct effect <span class="math inline">\(c&#39;\)</span>.</h1>
+<div id="what-happens" class="section level2">
+<h2>What happens</h2>
+<p>When the direct effect <span class="math inline">\(c&#39;\)</span> is close to zero, especially if not significant, we conclude that in the population the direct effect is practically null. We, however, have only the sample estimate of <span class="math inline">\(c&#39;\)</span>, which is subject to sample variability. Thus, out of chance, it may come out a bit larger than zero or a bit lower than zero. Indeed, when <span class="math inline">\(c&#39;\)</span> is very small and not significant, its confidence interval contains zero, signaling that <span class="math inline">\(c&#39;\)</span> may range from negative to positive values out of chance.</p>
+<p>Thus, in one sample it may come out negative, yielding a mediated effect larger than the total effect. For instance, assume that the population effects are <span class="math inline">\(\chi=10\)</span>, <span class="math inline">\(\chi&#39;=0\)</span> and <span class="math inline">\(\alpha \cdot \beta=10\)</span> (population values are always in greek, never known why). Sampling a sample from this population may give a direct effect of -1, for instance, just because of random variation. With <span class="math inline">\(c&#39;=-1\)</span>, and <span class="math inline">\(c=10\)</span>, <span class="math inline">\(a \cdot b\)</span> must be 11, because <span class="math inline">\(10=-1+11\)</span>.</p>
+</div>
+<div id="interpretation" class="section level2">
+<h2>Interpretation</h2>
+<p>We usually interpret these results by simply saying that there is a mediation effect and it is complete (sometime called <em>full mediation</em>), and that the mediation effect is statistically as large as the total effect. Full vs partial mediation is not a very valid distinction, but some people find the concept useful. The only drawback is that this case does not allow reporting the mediated effect as a proportion of the total effect, because the proportion would be larger than 1. One simply does not report the mediated effect as a proportion.</p>
+</div>
+</div>
+<div id="case-2-very-small-total-effect" class="section level1">
+<h1>Case 2: very small total effect</h1>
+<div id="what-happens-1" class="section level2">
+<h2>What happens</h2>
+<p>When the total effect is close to zero, but the mediated effect is substantial, we are likely in a <em>suppression model</em> <span class="citation">(MacKinnon, Krull, and Lockwood 2000)</span>. Suppression models are estimated using the same technique of mediation models, but their starting point is different. Instead of asking the question “why do I see an effect of X on Y?” we ask : “Why I do not see an effect of X on Y?” or more generally, “Why is the effect of X on Y so small?”</p>
+<p>Assume again that in the population we have a model with <span class="math inline">\(\chi=0\)</span>, <span class="math inline">\(\chi&#39;=-10\)</span> and <span class="math inline">\(\alpha \cdot \beta=10\)</span>, and our estimates are accurate: <span class="math inline">\(c=0\)</span>, and <span class="math inline">\(c=-10\)</span>, <span class="math inline">\(a \cdot b=10\)</span>. Clearly <span class="math inline">\(a \cdot b&gt;c\)</span>, but what is the meaning of these results? The meaning is that the independent variable <span class="math inline">\(x\)</span> would influence <span class="math inline">\(y\)</span> if <span class="math inline">\(m\)</span> was not playing a suppressing role, interfering with the effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.</p>
+<p>Let see an example. Assume a teacher organizes practice sections before a very difficult exam. The teacher measures the number of sections in which each student participated (<span class="math inline">\(x\)</span>) and correlate it to the exam score (<span class="math inline">\(y\)</span>). Surprisingly, the effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> is null (<span class="math inline">\(c=0\)</span>). The teacher may ask why is this the case, because one would expect the practice sections to help with the exam. To understand the issue, the teacher measures (in another study), the number of sections attended by each student, the exam grade and the anxiety before the exam. Assume it turns out that the more sections one attends, the stronger the anxiety, say <span class="math inline">\(a=5\)</span>, maybe because students realize how difficult the exam will be. However, anxiety interferes a bit with performance, so the more anxious the student, the worse is the grade, say <span class="math inline">\(b=-2\)</span>. The indirect effect will <span class="math inline">\(a \cdot b=(5) \cdot (-2)=-10\)</span>. If so, we must have <span class="math inline">\(c&#39;=10\)</span>, becaue <span class="math inline">\(0=10-10\)</span>.</p>
+</div>
+<div id="interpretation-1" class="section level2">
+<h2>Interpretation</h2>
+<p>How do we interpret the results? Attending more sections would have a positive effect on grade, but because attending more sections increases the anxiety, which in turns decreases the grade, the potential effect of attending more sections is counteracted, or <em>suppressed</em>, by anxiety.</p>
+<p>In general, <span class="math inline">\(c&#39;\)</span> indicates what would be the effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> if <span class="math inline">\(m\)</span> were not changed by <span class="math inline">\(x\)</span>. The indirect effect (or <em>suppression effect</em>) <span class="math inline">\(a \cdot b\)</span> indicates what are the consequences on <span class="math inline">\(y\)</span> of <span class="math inline">\(x\)</span> affecting <span class="math inline">\(m\)</span> and <span class="math inline">\(m\)</span> affecting <span class="math inline">\(y\)</span>.</p>
+<p>Statistically, the model is as valid as a mediational model. The interpretation is different.</p>
+</div>
+</div>
+<div id="issue-2-mediated-significant-total-non-significant" class="section level1">
+<h1>Issue 2: Mediated significant, Total non significant</h1>
+<p>Related to this topic is another seemingly strange set of results: A significant indirect effect in the presence of a non-significant total effect, all signs being the same. That is, testing <span class="math inline">\(c\)</span> yields a non significant effect, testing <span class="math inline">\(a\cdot b\)</span> yields a significant result, and both <span class="math inline">\(ab\)</span> and <span class="math inline">\(c&#39;\)</span> have the same sign (so we are not in the cases discussed above).</p>
+<p>This case is puzzling because it has implications on the very foundation of a mediation analysis: Can I estimate and interpret a mediation effect when the total effect is non-significant? There is a lot of discussion in the literature about this issue <span class="citation">(Agler and De Boeck 2017)</span>, here we want to understand why this case may happen.</p>
+<p>For simplicity, assume <span class="math inline">\(c&#39;=0\)</span>, such that <span class="math inline">\(c=a \cdot b\)</span>, but <span class="math inline">\(p_c&gt;.05\)</span> and <span class="math inline">\(p_{ab}&lt;.05\)</span>. The difficulty here is to understand how comes that two equal quantities yield two different inferential test results. The reason is that inferential tests are not only about the size of a parameter (a coefficient effect size), they depend on the sample variability of the parameter (its standard error). Sample variability influences statistical power, and statistical power influences our chances to get a significant result. It turns out <span class="citation">(Kenny and Judd 2014)</span> that the test of the indirect effect <span class="math inline">\(a \cdot b\)</span> is more powerful than the test of the total effect <span class="math inline">\(c\)</span>, sometimes dramatically more powerful. As such, expecially when <span class="math inline">\(c\)</span> and <span class="math inline">\(a \cdot b\)</span> are not large effects, it is more likely to find <span class="math inline">\(a \cdot b\)</span> as significant than finding <span class="math inline">\(c\)</span>.</p>
+<p><span class="citation">Kenny and Judd (2014)</span> provide a beautiful metaphor to explain the differences in power of the two tests.</p>
+<p>“It might be very hard to throw a ball 70 m in one throw. However, it is a lot easier to throw the ball 70 m in two throws. The single test of <span class="math inline">\(c\)</span> is like the single throw, whereas the test of <span class="math inline">\(a \cdot b\)</span> is like the double throw. This metaphor even helps one understand that the power gain is greatest when a and b are nearly equal and there is less of an advantage when they are relatively different. That is, one might be able to make two throws of 35 m each, but not one throw of 10 m and another of 60 m.”(pag. 338)</p>
+<p>A more technical account for this case can be given by considering a fundamental characteristic of sample estimates: Generally speaking, the more components are involved in a statistical quantity, the larger will be the sample variability of the estimate of that quantity (its standard error <span class="math inline">\(SE\)</span>). Thus, if <span class="math inline">\(q\)</span> and <span class="math inline">\(q&#39;\)</span> are two equal quantities, but <span class="math inline">\(q=f(\gamma)\)</span> (recall the Greek letter rule) and <span class="math inline">\(q&#39;=f(\alpha , \beta)\)</span>, other things being equal, <span class="math inline">\(SE(q)&lt;SE(q&#39;)\)</span>, because <span class="math inline">\(SE(q)\)</span> depends on the sample variability of the estimate of <span class="math inline">\(\gamma\)</span>, whereas <span class="math inline">\(q&#39;\)</span> depends on the sum of the sample variability of the estimates of <span class="math inline">\(\alpha\)</span> and the estimates of <span class="math inline">\(\beta\)</span>. Sample variability adds up, and it is always positive. This principle it is easy to grasp: sample variability is like uncertainty. If an outcome depends on different uncertain decisions, the more decisions one has to make, the more uncertain is the outcome. Please notice that this argument is independent to the statistical technique used to make inference (bootstrap or standard method). Sample variability exists independently of how we estimate it.</p>
+<p>In the mediation model, we know that the indirect effect is <span class="math inline">\(a\cdot b\)</span>, so its standard error depends on the sample variability of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. For the total effect, however, we know that <span class="math inline">\(c=a \cdot b + c&#39;\)</span>, so its standard error depends on the variability of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c&#39;\)</span>. More components, more uncertainty.</p>
+<p>Thus, when the mediated effect is significant but the total effect is not (and no suppression is present), it is likely that one lacks the power to detect the total effect.</p>
+<p>Wait a minute! (one can say) But the total effect is a simple regression coefficient, why should it be related to the variability of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c&#39;\)</span>? Well, if <span class="math inline">\(c\)</span> was “only” a simple regression coefficient, <span class="math inline">\(c=c&#39;\)</span>, we would have <span class="math inline">\(a \cdot b=0\)</span>, and thus we would not get a significant test for the mediated effect. If the mediated effect is not zero, it is part of the sources of variation of <span class="math inline">\(c\)</span>, no matter what our model is.</p>
+<div id="interpretation-2" class="section level2">
+<h2>Interpretation</h2>
+<p>What can we do in this case? First, we should wonder if our study is underpowered. Very likely, increasing the sample size will clear the issue: either the total effect becomes significant (so it was indeed a lack of power) or the mediated effect become not significant (so it was a fluke).</p>
+<p>Second, we can interpret the results as <em>an indication</em> of a mediating mechanism linking <span class="math inline">\(y\)</span> to <span class="math inline">\(x\)</span>, but we still do not possess enough evidence to support the actual link between <span class="math inline">\(y\)</span> to <span class="math inline">\(x\)</span>. In other words, one can say something along this line: We do not have enough evidence to show that <span class="math inline">\(x\)</span> influences <span class="math inline">\(y\)</span>, but if this influence is real, it is probably due to the intervening effect of <span class="math inline">\(m\)</span>. A weak position, but nonetheless standing.</p>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-agler2017" class="csl-entry">
+Agler, Robert, and Paul De Boeck. 2017. <span>“On the Interpretation and Use of Mediation: Multiple Perspectives on Mediation Analysis.”</span> <em>Frontiers in Psychology</em> 8. <a href="https://doi.org/10.3389/fpsyg.2017.01984">https://doi.org/10.3389/fpsyg.2017.01984</a>.
+</div>
+<div id="ref-baronandandkenny" class="csl-entry">
+Baron, Reuben M, and David A Kenny. 1986. <span>“The Moderator–Mediator Variable Distinction in Social Psychological Research: Conceptual, Strategic, and Statistical Considerations.”</span> <em>Journal of Personality and Social Psychology</em> 51 (6): 1173.
+</div>
+<div id="ref-kenny2014power" class="csl-entry">
+Kenny, David A, and Charles M Judd. 2014. <span>“Power Anomalies in Testing Mediation.”</span> <em>Psychological Science</em> 25 (2): 334–39.
+</div>
+<div id="ref-mackinnon2000equivalence" class="csl-entry">
+MacKinnon, David P, Jennifer L Krull, and Chondra M Lockwood. 2000. <span>“Equivalence of the Mediation, Confounding and Suppression Effect.”</span> <em>Prevention Science</em> 1 (4): 173–81.
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
