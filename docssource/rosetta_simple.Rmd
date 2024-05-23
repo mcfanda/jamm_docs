@@ -31,7 +31,7 @@ Here you can find comparisons of  results obtained in jamovi jAMM, jamovi (jmv),
 
 # Simple mediation
 
-Here we analyze the data discussed in the `r link_pages(nickname="glm_simple")`. Data can be downloaded from [University of Virginia Research Data Service]('http://static.lib.virginia.edu/statlab/materials/data/mediationData.csv'). Here we renamed the variables:
+Here we analyze the data discussed in the `r link_pages(nickname="glm_simple")`. Data can be downloaded from [University of Virginia Research Data Service](http://static.lib.virginia.edu/statlab/materials/data/mediationData.csv). Here we renamed the variables:
 
 * grades = X
 * selfesteem = M

@@ -14,7 +14,7 @@
 
 <title>jAMM: Model building</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -70,6 +70,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -94,6 +95,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -151,11 +155,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -184,8 +192,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +201,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -325,7 +326,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -369,80 +370,159 @@ div.tocify {
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> Path Diagram, Mediation, mediated moderation, moderated mediation, conditional mediation </span></p>
-<p>In this page we show how to set up some mediation models without interactions. For models with interactions (conditional mediation, moderated mediation, etc) see <a href="moderator_building.html">jAMM: Building conditional models</a>.</p>
+<p><span class="keywords"> <span class="keytitle"> keywords </span> Path
+Diagram, Mediation, mediated moderation, moderated mediation,
+conditional mediation </span></p>
+<p>In this page we show how to set up some mediation models without
+interactions. For models with interactions (conditional mediation,
+moderated mediation, etc) see <a href="moderator_building.html">jAMM:
+Building conditional models</a>.</p>
 <div id="simple-mediation" class="section level1">
 <h1>Simple mediation</h1>
-<p>To set up a simple mediation model, simply define one dependent variable, one independent variable and one mediator.</p>
+<p>To set up a simple mediation model, simply define one dependent
+variable, one independent variable and one mediator.</p>
 <p><img src="models/m1.png" class="img-responsive" alt=""></p>
-<p>jAMM will define the models for you, as shown in the model info table.</p>
+<p>jAMM will define the models for you, as shown in the model info
+table.</p>
 <p><img src="models/m1_2.png" class="img-responsive" alt=""></p>
 </div>
 <div id="categorical-independent-variables" class="section level1">
 <h1>Categorical independent variables</h1>
 <p>The same logic applies for categorical independent variables.</p>
 <p><img src="models/m2.png" class="img-responsive" alt=""></p>
-<p>However, for categorical independent variables, the path diagram shows only one box for the IV, even though the estimation requires dummies (contrast variables) to estimate the effects. This is signaled in the notes.</p>
+<p>However, for categorical independent variables, the path diagram
+shows only one box for the IV, even though the estimation requires
+dummies (contrast variables) to estimate the effects. This is signaled
+in the notes.</p>
 <p><img src="models/m2_2.png" class="img-responsive" alt=""></p>
-<p>Thus, since <code>fact1</code> variable has 4 groups, in the results we will find three mediated effects, one for the contrast variable <code>fact11</code>, one for <code>fact12</code>, and one for <code>fact11</code>.</p>
+<p>Thus, since <code>fact1</code> variable has 4 groups, in the results
+we will find three mediated effects, one for the contrast variable
+<code>fact11</code>, one for <code>fact12</code>, and one for
+<code>fact11</code>.</p>
 <p><img src="models/m2_3.png" class="img-responsive" alt=""></p>
 </div>
 <div id="multiple-independent-variables" class="section level1">
 <h1>Multiple independent variables</h1>
-<p>You can add as many independent variables as you need, the model is updated, by default, accordingly with the simple rule that each IV is mediatated by the mediator.</p>
+<p>You can add as many independent variables as you need, the model is
+updated, by default, accordingly with the simple rule that each IV is
+mediatated by the mediator.</p>
 <p><img src="models/m3.png" class="img-responsive" alt=""></p>
-<p>Nonetheless, one may have in mind a different model (not necessarily sensible in all applications). Assume we want the mediated effects of <code>x1</code> and <code>x2</code> through <code>m1</code>, but we want the effects on <code>y</code> (and only them) to be computed after partializing <code>x3</code>. First, we go to <code>Mediators models</code> and remove the effect of <code>x3</code> from the list of predictors. In doing so, the jAMM removes <code>x3</code> also from the <code>Full model</code>. We go there and re-include <code>x3</code> in the list of predictors. So we obtain the model we had in mind.</p>
+<p>Nonetheless, one may have in mind a different model (not necessarily
+sensible in all applications). Assume we want the mediated effects of
+<code>x1</code> and <code>x2</code> through <code>m1</code>, but we want
+the effects on <code>y</code> (and only them) to be computed after
+partializing <code>x3</code>. First, we go to
+<code>Mediators models</code> and remove the effect of <code>x3</code>
+from the list of predictors. In doing so, the jAMM removes
+<code>x3</code> also from the <code>Full model</code>. We go there and
+re-include <code>x3</code> in the list of predictors. So we obtain the
+model we had in mind.</p>
 <p><img src="models/m4.png" class="img-responsive" alt=""></p>
-<p>Notice the green path. That path is not estimated, but jAMM suggests to estimate it. That is because the model we just set up is not complete in terms of <code>x3</code> mediation (recall that jAMM assumes you want to estimate mediation models).</p>
+<p>Notice the green path. That path is not estimated, but jAMM suggests
+to estimate it. That is because the model we just set up is not complete
+in terms of <code>x3</code> mediation (recall that jAMM assumes you want
+to estimate mediation models).</p>
 <p><img src="models/m4.png" class="img-responsive" alt=""></p>
-<p>If seeing the suggested paths disturb you, you can suppress them in the <code>Mediation options</code> tab.</p>
+<p>If seeing the suggested paths disturb you, you can suppress them in
+the <code>Mediation options</code> tab.</p>
 </div>
 <div id="multiple-mediators" class="section level1">
 <h1>Multiple mediators</h1>
 <div id="parallel-mediators" class="section level2">
 <h2>Parallel mediators</h2>
-<p>By defining two or more variables as mediators in the variables input panel, we obtain a parallel mediators model by default.</p>
+<p>By defining two or more variables as mediators in the variables input
+panel, we obtain a parallel mediators model by default.</p>
 <p><img src="models/m5.png" class="img-responsive" alt=""></p>
 <p>You can put as many mediators as you want</p>
 <p><img src="models/m6.png" class="img-responsive" alt=""></p>
 </div>
 <div id="mediators-chains" class="section level2">
 <h2>Mediators chains</h2>
-<p>Several mediation models require building some sort of mediators chain. For instance, we can have that variable <code>x</code> is measured 4 times,and we want to see if <code>x1</code> affects <code>x2</code>, <code>x2</code> affects <code>x3</code>, and <code>x3</code> affects <code>x4</code>. To build such a model, first we select <code>x1</code> as the independent variable (it is the only exogenous variable in the model), <code>x2</code> and <code>x3</code> as mediators and <code>x4</code> as dependent variable.</p>
+<p>Several mediation models require building some sort of mediators
+chain. For instance, we can have that variable <code>x</code> is
+measured 4 times,and we want to see if <code>x1</code> affects
+<code>x2</code>, <code>x2</code> affects <code>x3</code>, and
+<code>x3</code> affects <code>x4</code>. To build such a model, first we
+select <code>x1</code> as the independent variable (it is the only
+exogenous variable in the model), <code>x2</code> and <code>x3</code> as
+mediators and <code>x4</code> as dependent variable.</p>
 <p><img src="models/m7_1.png" class="img-responsive" alt=""></p>
-<p>While we do so, jAMM builds a parallel mediators model (the default), but we ignore it and move on to change that. In fact, as compared with a parallel mediators model, the model we have in mind requires also that <code>x2</code> be a predictor of <code>x3</code>. We go to <code>Mediators models</code> tab and add <code>x2</code> in the field <em>Mediator=x3</em>. There we have it.</p>
+<p>While we do so, jAMM builds a parallel mediators model (the default),
+but we ignore it and move on to change that. In fact, as compared with a
+parallel mediators model, the model we have in mind requires also that
+<code>x2</code> be a predictor of <code>x3</code>. We go to
+<code>Mediators models</code> tab and add <code>x2</code> in the field
+<em>Mediator=x3</em>. There we have it.</p>
 <p><img src="models/m7.png" class="img-responsive" alt=""></p>
 </div>
 <div id="multi-layer-model" class="section level2">
 <h2>Multi-layer model</h2>
-<p>Assume you have <code>x1</code> as independent, that influences <code>x2</code> and <code>x3</code>, that in turn affect <code>y</code> through <code>m1</code>. We can think of this model as a multi-layer model in terms of layers of mediators: first the <code>x2</code> and <code>x3</code> layer, then <code>m1</code> layer. To set it up, first we put all endogenous predictors in the mediators field and <code>x1</code> and <code>y</code> in the independent and dependent field, respectively.</p>
+<p>Assume you have <code>x1</code> as independent, that influences
+<code>x2</code> and <code>x3</code>, that in turn affect <code>y</code>
+through <code>m1</code>. We can think of this model as a multi-layer
+model in terms of layers of mediators: first the <code>x2</code> and
+<code>x3</code> layer, then <code>m1</code> layer. To set it up, first
+we put all endogenous predictors in the mediators field and
+<code>x1</code> and <code>y</code> in the independent and dependent
+field, respectively.</p>
 <p><img src="models/m8_1.png" class="img-responsive" alt=""></p>
-<p>Again, we should change the automatically created parallel mediators model. We should add the paths from <code>x2</code> and <code>x3</code> to <code>m1</code>. To do so we go to <code>Mediators models</code> tab and add <code>x2</code> and <code>x3</code> in the field <em>Mediator=m1</em>.</p>
+<p>Again, we should change the automatically created parallel mediators
+model. We should add the paths from <code>x2</code> and <code>x3</code>
+to <code>m1</code>. To do so we go to <code>Mediators models</code> tab
+and add <code>x2</code> and <code>x3</code> in the field
+<em>Mediator=m1</em>.</p>
 <p><img src="models/m8.png" class="img-responsive" alt=""></p>
-<p>Suprised by the ugly picture? Well, the model is correct but the picture can look better if one re-arranges the position of the terms. First, remove the mediators (jAMM does not like re-arranging terms already defined, so it is better to start anew). We want the last mediator <code>m1</code> to be in the center of the diagram, so we should put it as the second mediator of the list. Then we change the <code>Mediators models</code> as we did before. Here is the input: a bit better looking. <img src="models/m8_2.png" class="img-responsive" alt=""></p>
+<p>Suprised by the ugly picture? Well, the model is correct but the
+picture can look better if one re-arranges the position of the terms.
+First, remove the mediators (jAMM does not like re-arranging terms
+already defined, so it is better to start anew). We want the last
+mediator <code>m1</code> to be in the center of the diagram, so we
+should put it as the second mediator of the list. Then we change the
+<code>Mediators models</code> as we did before. Here is the input: a bit
+better looking.
+<img src="models/m8_2.png" class="img-responsive" alt=""></p>
 <p>Here is the output.</p>
 <p><img src="models/m8_3.png" class="img-responsive" alt=""></p>
 </div>
 </div>
 <div id="multiple-iv-and-multiple-mediators" class="section level1">
 <h1>Multiple IV and multiple mediators</h1>
-<p>One can combine the multiple IVs and the multiple mediators models to better suit the research aims. By defining multiple IV and multiple mediators in the variale input tabs, one obtains, by default, a full parallel mediators model.</p>
+<p>One can combine the multiple IVs and the multiple mediators models to
+better suit the research aims. By defining multiple IV and multiple
+mediators in the variale input tabs, one obtains, by default, a full
+parallel mediators model.</p>
 <p><img src="models/m9.png" class="img-responsive" alt=""></p>
-<p>Obviously, one can then change the structure of the model, for instance by making the mediators a chain of mediators, or by removing some path from one IV to one mediator.</p>
+<p>Obviously, one can then change the structure of the model, for
+instance by making the mediators a chain of mediators, or by removing
+some path from one IV to one mediator.</p>
 <p><img src="models/m11.png" class="img-responsive" alt=""></p>
-<p>Notice that the previos model is not equivalent to two independent simple mediation models, because in the present model all the effects on the dependent variable <code>y</code> are computed keeping constant both independent variables. This feature is reminded by the notes of the path diagram.</p>
+<p>Notice that the previos model is not equivalent to two independent
+simple mediation models, because in the present model all the effects on
+the dependent variable <code>y</code> are computed keeping constant both
+independent variables. This feature is reminded by the notes of the path
+diagram.</p>
 <p><img src="models/m11_2.png" class="img-responsive" alt=""></p>
 </div>
 <div id="mis-specified-models" class="section level1">
 <h1>Mis-specified models</h1>
-<p>There are models that may make a lot of sense in general, but are not mediation models. These models will not be estimated by jAMM, because they cannot produce mediated effects (that are the effects jAMM requires).</p>
+<p>There are models that may make a lot of sense in general, but are not
+mediation models. These models will not be estimated by jAMM, because
+they cannot produce mediated effects (that are the effects jAMM
+requires).</p>
 <p>The first example is a model without mediators effect.</p>
 <p><img src="models/m12.png" class="img-responsive" alt=""></p>
-<p>In this model I removed the path from <code>m1</code> to <code>y</code> in the <code>Full model</code> tab. That creates a model in which the mediator has no role, and thus the path diagram shows a red path indicating that that path is required. It also signals the problem in the <code>Models info</code> table.</p>
+<p>In this model I removed the path from <code>m1</code> to
+<code>y</code> in the <code>Full model</code> tab. That creates a model
+in which the mediator has no role, and thus the path diagram shows a red
+path indicating that that path is required. It also signals the problem
+in the <code>Models info</code> table.</p>
 <p><img src="models/m12_2.png" class="img-responsive" alt=""></p>
-<p>Another possible error is to have each mediator to predict all the other mediators. That would make the model recursive, and not a mediation model.</p>
+<p>Another possible error is to have each mediator to predict all the
+other mediators. That would make the model recursive, and not a
+mediation model.</p>
 <p><img src="models/m13.png" class="img-responsive" alt=""></p>
-<p>jAMM warns you of the problem with a purple path in the diagram, and with some explanation in the <code>Models info</code> table.</p>
+<p>jAMM warns you of the problem with a purple path in the diagram, and
+with some explanation in the <code>Models info</code> table.</p>
 <p><img src="models/m13_2.png" class="img-responsive" alt=""></p>
 </div>
 <div id="list-of-docs" class="section level1">
@@ -479,7 +559,9 @@ div.tocify {
 Comments?
 </h1>
 <p>
-Got comments, issues or spotted a bug? Please open an issue on <a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at
+github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
 </p>
 </div>
 

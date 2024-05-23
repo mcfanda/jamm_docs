@@ -14,7 +14,7 @@
 
 <title>Rosetta store: conditional mediation</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -70,6 +70,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -94,6 +95,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -151,11 +155,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -184,8 +192,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +201,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -319,7 +320,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -363,16 +364,27 @@ div.tocify {
 </div>
 
 
-<p><span class="keywords"> <span class="keytitle"> keywords </span> jamovi, SPSS, R, PROCESS, mediation </span></p>
-<p><span class="version"> <span class="versiontitle"> jAMM version ≥ </span> 0.0.4 </span></p>
+<p><span class="keywords"> <span class="keytitle"> keywords </span>
+jamovi, SPSS, R, PROCESS, mediation </span></p>
+<p><span class="version"> <span class="versiontitle"> jAMM version ≥
+</span> 0.0.4 </span></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Here you can find comparisons of results obtained in jamovi jAMM, jamovi (jmv), pure R, and SPSS. When not explicitely discussed, the code of different software is written with the aim of obtaing equivalent results across software packages.</p>
+<p>Here you can find comparisons of results obtained in jamovi jAMM,
+jamovi (jmv), pure R, and SPSS. When not explicitely discussed, the code
+of different software is written with the aim of obtaing equivalent
+results across software packages.</p>
 </div>
 <div id="example" class="section level1">
 <h1>Example</h1>
-<p>This example shows how to estimate a conditional (moderated) mediation model with four variables in jAMM. Data come from <a href="https://www.ncbi.nlm.nih.gov/pubmed/16393020">Muller, Judd, Yzerbyt, 2005</a> and contain variables related to a social dilemma experiment. The dataset can be downloaed <a href="https://github.com/mcfanda/jamm/blob/master/data/coopmedmod.csv">here</a></p>
-<p>A long version of the analyses in jAMM is presented in <a href="glm_example2.html">jAMM: conditional mediation</a>.</p>
+<p>This example shows how to estimate a conditional (moderated)
+mediation model with four variables in jAMM. Data come from <a
+href="https://www.ncbi.nlm.nih.gov/pubmed/16393020">Muller, Judd,
+Yzerbyt, 2005</a> and contain variables related to a social dilemma
+experiment. The dataset can be downloaed <a
+href="https://github.com/mcfanda/jamm/blob/master/data/coopmedmod.csv">here</a></p>
+<p>A long version of the analyses in jAMM is presented in
+<a href="glm_example2.html">jAMM: conditional mediation</a>.</p>
 </div>
 <div id="variables-and-model" class="section level1">
 <h1>Variables and model</h1>
@@ -380,25 +392,40 @@ div.tocify {
 <ul>
 <li><code>prime</code>: a two-group experimental condition</li>
 <li><code>EXP</code>: expectations about the other cooperation</li>
-<li><code>SVO</code>: continuous measure of social value orientation (higher levels mean more cooperative attitude)</li>
-<li><code>BEH</code>: behavior, the amount of experimental tokens given to the public good by the participant.</li>
+<li><code>SVO</code>: continuous measure of social value orientation
+(higher levels mean more cooperative attitude)</li>
+<li><code>BEH</code>: behavior, the amount of experimental tokens given
+to the public good by the participant.</li>
 </ul>
 <p>The model we estimated is:</p>
 <p><img src="examples/muller/moderator2.png" class="img-responsive" alt=""></p>
-<p>Thus, * <code>prime</code>: is the independent variable (IV) * <code>EXP</code>: is the mediator (ME) * <code>SVO</code>: is the moderator (MO) * <code>BEH</code>: is the dependent variable (DV)</p>
+<p>Thus, * <code>prime</code>: is the independent variable (IV) *
+<code>EXP</code>: is the mediator (ME) * <code>SVO</code>: is the
+moderator (MO) * <code>BEH</code>: is the dependent variable (DV)</p>
 <p>All continuous predictors are centered to their means.</p>
 </div>
 <div id="jamm" class="section level1">
 <h1>jAMM</h1>
-<p>Results are composed by 4 tables. The first table reports the interaction involved in the mediation model, namely, the interaction between the IV and the moderator ( <code>SVO</code> X <code>prime</code>-&gt;<code>EXP</code>) in predicting the mediator, and between the mediator and the moderator in predicting the DV ( <code>SVO</code> X <code>EXP</code>-&gt;<code>BEH</code>).</p>
+<p>Results are composed by 4 tables. The first table reports the
+interaction involved in the mediation model, namely, the interaction
+between the IV and the moderator ( <code>SVO</code> X
+<code>prime</code>-&gt;<code>EXP</code>) in predicting the mediator, and
+between the mediator and the moderator in predicting the DV (
+<code>SVO</code> X <code>EXP</code>-&gt;<code>BEH</code>).</p>
 <p><img src="examples/muller/interactions.png" class="img-responsive" alt=""></p>
-<p>The other three tables report the indirect, direct, and total effect of the IV on the DV at three different levels of the moderator. In this example the three levels of the moderator were <code>mean+1 SD</code>,<code>mean</code>,<code>mean-1 SD</code>.</p>
+<p>The other three tables report the indirect, direct, and total effect
+of the IV on the DV at three different levels of the moderator. In this
+example the three levels of the moderator were
+<code>mean+1 SD</code>,<code>mean</code>,<code>mean-1 SD</code>.</p>
 <p><img src="examples/muller/results0_b.png" class="img-responsive" alt=""></p>
-<p>Confidence intervals where estimated with bootstrap percentile method (keep in mind that jAMM bootstrap the full mediation model for each level of the moderator, so the bootstrap can be quite slow).</p>
+<p>Confidence intervals where estimated with bootstrap percentile method
+(keep in mind that jAMM bootstrap the full mediation model for each
+level of the moderator, so the bootstrap can be quite slow).</p>
 </div>
 <div id="r-and-mediation-package" class="section level1">
 <h1>R and mediation package</h1>
-<p>First, we estimate the two model needed to obtain the model parameters using <code>lm()</code></p>
+<p>First, we estimate the two model needed to obtain the model
+parameters using <code>lm()</code></p>
 <pre class="r"><code># I happened to have the spss version of the data
 library(foreign)
 data&lt;-read.spss(&quot;../data/muller_mediation.sav&quot;,to.data.frame = T) 
@@ -458,17 +485,23 @@ summary(mod2)</code></pre>
 mod1$coefficients[2]*mod2$coefficients[4]</code></pre>
 <pre><code>##  cprime1 
 ## 2.260951</code></pre>
-<p>We can see that the estimates of the interactions are identical to the ones obtained with jAMM (cf <code>Moderator effects</code> table in jAMM). The standard errors and the z-tests are slightly different because jAMM is based on <code>R lavaan package</code>, that uses the <a href="http://lavaan.ugent.be/tutorial/est.html">expected information matrix</a> to obtain the standard errors.</p>
-<p>As regards the mediated effects, from the models we just estimated we can compute the average mediated effect, because the IV and the MO variables are centered to their means. We can use <a href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">R package mediation</a>. Confidence intervals are computed with the bootstrap percentile method. Because we have a moderation, we should tell the <code>mediate()</code> command that we want the estimates of mediated effect for SVO equal to its mean. We do that with the <code>covariate</code> option.</p>
-<pre class="r"><code>library(mediation, quietly = T)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;MASS&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:Rsearchable&#39;:
-## 
-##     select</code></pre>
-<pre><code>## mediation: Causal Mediation Analysis
-## Version: 4.5.0</code></pre>
-<pre class="r"><code>nsim =1000 # number of bootstrap samples to draw
+<p>We can see that the estimates of the interactions are identical to
+the ones obtained with jAMM (cf <code>Moderator effects</code> table in
+jAMM). The standard errors and the z-tests are slightly different
+because jAMM is based on <code>R lavaan package</code>, that uses the <a
+href="http://lavaan.ugent.be/tutorial/est.html">expected information
+matrix</a> to obtain the standard errors.</p>
+<p>As regards the mediated effects, from the models we just estimated we
+can compute the average mediated effect, because the IV and the MO
+variables are centered to their means. We can use <a
+href="https://cran.r-project.org/web/packages/mediation/mediation.pdf">R
+package mediation</a>. Confidence intervals are computed with the
+bootstrap percentile method. Because we have a moderation, we should
+tell the <code>mediate()</code> command that we want the estimates of
+mediated effect for SVO equal to its mean. We do that with the
+<code>covariate</code> option.</p>
+<pre class="r"><code>library(mediation, quietly = T)
+nsim =1000 # number of bootstrap samples to draw
 modValue&lt;-mean(data$SVO)
 med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
 <pre><code>## Running nonparametric bootstrap</code></pre>
@@ -481,10 +514,10 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             4.5219       2.0164         7.81  &lt;2e-16 ***
-## ADE              4.3385       0.0587         8.81   0.050 *  
-## Total Effect     8.8604       4.1793        13.25   0.002 ** 
-## Prop. Mediated   0.5103       0.2482         0.98   0.002 ** 
+## ACME              4.522        2.087         7.56  &lt;2e-16 ***
+## ADE               4.339       -0.311         8.92   0.066 .  
+## Total Effect      8.860        4.119        13.44  &lt;2e-16 ***
+## Prop. Mediated    0.510        0.258         1.08  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -492,8 +525,18 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## 
 ## 
 ## Simulations: 1000</code></pre>
-<p><code>mediation</code> package calls the indirect (mediated) effect “ACME” and the direct effect “ADE”. We can compare the estimates with the jAMM table <code>Indirect and direct effects computed for SVO=mean</code>. We can see that the mediated effect is not exactly equal to the one estimated by jAMM. It is exctely twice as large. <span class="math inline">\(4.5219/2=2.2609\)</span>. The reason is in the way <code>mediation</code> package treats the categorical variable. Nontheless, it is just a scaling issue, the remaing of the results are perfectly in line.</p>
-<p>Then, we can test the mediated effect at different levels of the moderator SVO.</p>
+<p><code>mediation</code> package calls the indirect (mediated) effect
+“ACME” and the direct effect “ADE”. We can compare the estimates with
+the jAMM table
+<code>Indirect and direct effects computed for SVO=mean</code>. We can
+see that the mediated effect is not exactly equal to the one estimated
+by jAMM. It is exctely twice as large. <span
+class="math inline">\(4.5219/2=2.2609\)</span>. The reason is in the way
+<code>mediation</code> package treats the categorical variable.
+Nontheless, it is just a scaling issue, the remaing of the results are
+perfectly in line.</p>
+<p>Then, we can test the mediated effect at different levels of the
+moderator SVO.</p>
 <pre class="r"><code>## moderator at 1 SD below the average
 modValue&lt;-mean(data$SVO)-sd(data$SVO)
 med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,covariates=list(&quot;SVO&quot;=modValue),sims = nsim,boot = TRUE ,boot.ci.type = &quot;perc&quot;)</code></pre>
@@ -507,10 +550,10 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value
-## ACME             -1.178       -4.191         0.96    0.32
-## ADE               4.223       -1.813         9.68    0.14
-## Total Effect      3.045       -2.343         8.28    0.26
-## Prop. Mediated   -0.387       -6.523         4.69    0.52
+## ACME             -1.178       -4.046         0.73    0.27
+## ADE               4.223       -1.674         9.92    0.20
+## Total Effect      3.045       -2.949         8.26    0.29
+## Prop. Mediated   -0.387       -4.492         3.50    0.50
 ## 
 ## Sample Size Used: 100 
 ## 
@@ -529,10 +572,10 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 ## (Inference Conditional on the Covariate Values Specified in `covariates&#39;)
 ## 
 ##                Estimate 95% CI Lower 95% CI Upper p-value    
-## ACME             10.753        3.255        19.26   0.002 ** 
-## ADE               4.454       -2.157        10.77   0.182    
-## Total Effect     15.208        6.886        24.58  &lt;2e-16 ***
-## Prop. Mediated    0.707        0.331         1.22   0.002 ** 
+## ACME             10.753        3.353        19.13   0.004 ** 
+## ADE               4.454       -1.824        10.57   0.162    
+## Total Effect     15.208        6.164        24.24  &lt;2e-16 ***
+## Prop. Mediated    0.707        0.367         1.18   0.004 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -543,15 +586,34 @@ med&lt;-mediate(mod1,mod2,treat=&quot;cprime&quot;,mediator = &quot;EXP&quot;,co
 </div>
 <div id="spss-process" class="section level1">
 <h1>SPSS PROCESS</h1>
-<p>To compare jAMM results with <a href="http://www.processmacro.org/download.html">PROCESS macro</a> results, we should set up PROCESS to estimate <a href="http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf">model 59</a>. In PROCESS, this model is in fact the one with the moderator interacting with both the independent variable and the mediator. WE also need to ask for simple mediated effects computed at the mean, one SD plus, and one SD minus the mean (PROCESS 3 default is to condition the effects at selected percentile values of the moderator).</p>
-<p>After that, we obtain the following results. First we look at the interaction table produced by PROCESS and compare it with jAMM <code>Moderator effect</code> table.</p>
-<p>Interaction in predicting the mediator <code>EXP</code>. <img src="examples/muller/process1.png" class="img-responsive" alt=""> Interactions in predicting the dependent variable <code>BEH</code>. <img src="examples/muller/process2.png" class="img-responsive" alt=""> PROCESS gives the F-test, but we can see that it is equivalent to the (square of) z-test in jAMM, to the second significant digit.</p>
-<p>Then we look at the simple mediated effects and direct effects. Also here, we found a very close match. <img src="examples/muller/process3.png" class="img-responsive" alt=""></p>
+<p>To compare jAMM results with <a
+href="http://www.processmacro.org/download.html">PROCESS macro</a>
+results, we should set up PROCESS to estimate <a
+href="http://www.personal.psu.edu/jxb14/M554/specreg/templates.pdf">model
+59</a>. In PROCESS, this model is in fact the one with the moderator
+interacting with both the independent variable and the mediator. WE also
+need to ask for simple mediated effects computed at the mean, one SD
+plus, and one SD minus the mean (PROCESS 3 default is to condition the
+effects at selected percentile values of the moderator).</p>
+<p>After that, we obtain the following results. First we look at the
+interaction table produced by PROCESS and compare it with jAMM
+<code>Moderator effect</code> table.</p>
+<p>Interaction in predicting the mediator <code>EXP</code>.
+<img src="examples/muller/process1.png" class="img-responsive" alt="">
+Interactions in predicting the dependent variable <code>BEH</code>.
+<img src="examples/muller/process2.png" class="img-responsive" alt="">
+PROCESS gives the F-test, but we can see that it is equivalent to the
+(square of) z-test in jAMM, to the second significant digit.</p>
+<p>Then we look at the simple mediated effects and direct effects. Also
+here, we found a very close match.
+<img src="examples/muller/process3.png" class="img-responsive" alt=""></p>
 <h1>
 Comments?
 </h1>
 <p>
-Got comments, issues or spotted a bug? Please open an issue on <a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at
+github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
 </p>
 </div>
 

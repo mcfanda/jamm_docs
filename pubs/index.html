@@ -13,7 +13,7 @@
 
 <title>jAMM: jamovi Advanced Mediation Models</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -66,6 +66,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -90,6 +91,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -147,11 +151,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -180,8 +188,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +197,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -242,7 +243,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -295,18 +296,21 @@ $(document).ready(function () {
 <li>Multiple mediators models</li>
 <li>Multiple independent variable models</li>
 <li>Conditional mediation (moderated mediation)</li>
-<li>Simple mediational effects (estimated at different levels of moderators)</li>
+<li>Simple mediational effects (estimated at different levels of
+moderators)</li>
 <li>Bootstrap confidence intervals</li>
 <li>Checks for coherence of the model</li>
 <li>Suggestions toward more coherent models</li>
-<li>Automatically guesses which mediation model is more likely to be needed</li>
+<li>Automatically guesses which mediation model is more likely to be
+needed</li>
 <li>Custom models from UI</li>
 </ul>
 </div>
 <div id="not-implemented" class="section level1">
 <h1>Not implemented</h1>
 <ul>
-<li>Interactions among moderators of moderators (not really high priority)</li>
+<li>Interactions among moderators of moderators (not really high
+priority)</li>
 <li>Rigorous checks for weired and complex models</li>
 </ul>
 </div>
@@ -316,7 +320,8 @@ $(document).ready(function () {
 </div>
 <div id="install-in-r" class="section level1">
 <h1>Install in R</h1>
-<p>First, you need to install R developing tools from CRAN and jamovi core package.</p>
+<p>First, you need to install R developing tools from CRAN and jamovi
+core package.</p>
 <pre class="r"><code>install.packages(&quot;devtools&quot;,repos=&#39;http://cran.rstudio.com/&#39;)
 
 install.packages(&#39;jmvcore&#39;, repos=c(&#39;https://repo.jamovi.org&#39;, &#39;https://cran.r-project.org&#39;))
@@ -330,7 +335,9 @@ jmvtools::install(pkg=pkg)
 Comments?
 </h1>
 <p>
-Got comments, issues or spotted a bug? Please open an issue on <a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href=" https://github.com/mcfanda/gamlj/issues "> GAMLj at
+github“</a> or <a href="mailto:mcfanda@gmail.com">send me an email</a>
 </p>
 </div>
 
